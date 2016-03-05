@@ -1,6 +1,6 @@
 #Bongo Fixture Loader
 
-Simple fixture loader for mongo db.
+Simple fixture loader for mongodb.
 
 ##Installation
 .. code-block:: bash
@@ -52,7 +52,6 @@ Example of a message collection:
 .. code-block:: bash
     $ bin/bongo-load
 
-```
 
 ##Requirement
 
