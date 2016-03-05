@@ -15,7 +15,8 @@ Configuration
 
 Create a yaml file into /projectRoot/config/config.test.yml
 
-.. code-block:: yml
+.. code-block:: yaml
+
     config:
       db:
         db_name: messages_test
@@ -33,9 +34,9 @@ Create a yaml file into /projectRoot/config/config.test.yml
 
 Create one or more fixtures in the configured path:
 
-.. code-block:: yml
+.. code-block:: yaml
 
-    <collectionname>
+    <collectionname>:
         - object 1
         - object 2
         - object 3
@@ -44,6 +45,7 @@ Create one or more fixtures in the configured path:
 Example of a message collection:
 
 .. code-block:: yaml
+
     messages:
         - {"_id" : 1, "conversation" : 1, "sender" : 1, "recipient" : [ {"id" : 2 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
         - {"_id" : 2, "conversation" : 1, "sender" : 2, "recipient" : [ {"id" : 1 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
@@ -61,8 +63,9 @@ Load fixtures:
     
     $ bin/bongo-load
 
-Requirement
------------
+
+Requirements
+------------
 
 - PHP > 5.4
 - mongo extension
