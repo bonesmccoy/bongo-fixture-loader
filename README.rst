@@ -13,7 +13,7 @@ Installation
 Configuration
 -------------
 
-Create a yaml file into /projectRoot/config/config.test.yml
+Create a yaml file into ```/yourprojectRoot/config/config.test.yml```
 
 .. code-block:: yaml
 
