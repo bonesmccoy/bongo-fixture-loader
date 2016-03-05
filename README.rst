@@ -1,12 +1,18 @@
-#Bongo Fixture Loader
+Bongo Fixture Loader
+====================
 
 Simple fixture loader for mongodb.
 
-##Installation
+Installation
+------------
+
 .. code-block:: bash
+
     $ composer require-dev bonesmccoy/bongo-fixture-loader
 
-##Configuration
+Configuration
+-------------
+
 Create a yaml file into /projectRoot/config/config.test.yml
 
 .. code-block:: yml
@@ -28,6 +34,7 @@ Create a yaml file into /projectRoot/config/config.test.yml
 Create one or more fixtures in the configured path:
 
 .. code-block:: yml
+
     <collectionname>
         - object 1
         - object 2
@@ -37,7 +44,6 @@ Create one or more fixtures in the configured path:
 Example of a message collection:
 
 .. code-block:: yml
-
     messages:
         - {"_id" : 1, "conversation" : 1, "sender" : 1, "recipient" : [ {"id" : 2 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
         - {"_id" : 2, "conversation" : 1, "sender" : 2, "recipient" : [ {"id" : 1 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
@@ -46,14 +52,15 @@ Example of a message collection:
         - {"_id" : 5, "conversation" : 2, "sender" : 3, "recipient" : [ {"id" : 2 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
         - {"_id" : 6, "conversation" : 2, "sender" : 2, "recipient" : [ {"id" : 1 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
 
-
-##Usage
+Usage
+-----
 
 .. code-block:: bash
     $ bin/bongo-load
 
 
-##Requirement
+Requirement
+-----------
 
 - PHP > 5.4
 - mongo extension
