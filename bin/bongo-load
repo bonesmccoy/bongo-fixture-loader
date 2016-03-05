@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+$cwd = getcwd();
+
+if (is_file($autoload = $cwd . '/vendor/autoload.php')) {
+    require $autoload;
+} else {
+    fwrite(STDERR,
+        'You must set up the project dependencies, run the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+    exit(1);
+}
+
+try {
+    $fixtureLoader = new Bones\Component\Mongo\FixtureLoader(
+        $cwd,
+        $cwd . "/config/config.test.yml"
+    );
+
+    $fixtureLoader->run();
+} Catch(\Exception $e) {
+    fwrite(STDERR,
+       "Error: " . $e->getMessage()
+    );
+    exit(1);
+}

@@ -1,0 +1,18 @@
+{
+    "name": "bonesmccoy/bongo-fixture-loader",
+    "require": {
+        "php" : ">5.4",
+        "ext-mongo" : "*",
+        "symfony/yaml" : "*"
+    },
+    "bin": ["bin/bongo-load"],
+    "require-dev": {},
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src"
+        }
+    }
+}
