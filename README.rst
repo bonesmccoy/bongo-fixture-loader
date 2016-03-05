@@ -1,7 +1,7 @@
 Bongo Fixture Loader
 ====================
 
-Simple fixture loader for mongodb.
+Bon(es)(mon)go fixture loader for mongodb.
 
 Installation
 ------------
@@ -43,7 +43,7 @@ Create one or more fixtures in the configured path:
 
 Example of a message collection:
 
-.. code-block:: yml
+.. code-block:: yaml
     messages:
         - {"_id" : 1, "conversation" : 1, "sender" : 1, "recipient" : [ {"id" : 2 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
         - {"_id" : 2, "conversation" : 1, "sender" : 2, "recipient" : [ {"id" : 1 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
@@ -52,12 +52,14 @@ Example of a message collection:
         - {"_id" : 5, "conversation" : 2, "sender" : 3, "recipient" : [ {"id" : 2 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
         - {"_id" : 6, "conversation" : 2, "sender" : 2, "recipient" : [ {"id" : 1 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
 
+
 Usage
 -----
+Load fixtures:
 
 .. code-block:: bash
+    
     $ bin/bongo-load
-
 
 Requirement
 -----------
