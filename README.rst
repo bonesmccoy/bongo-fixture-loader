@@ -3,6 +3,8 @@ Bongo Fixture Loader
 
 Bon(es)(mon)go fixture loader for mongodb.
 
+I know that I'm reinventing the weel, but sometimes it's nice to behave like a caveman ;)
+
 Installation
 ------------
 
