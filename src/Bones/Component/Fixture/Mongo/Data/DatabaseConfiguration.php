@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bones\Component\Mongo;
+namespace Bones\Component\Fixture\Mongo\Data;
 
 
 class DatabaseConfiguration
@@ -44,51 +44,11 @@ class DatabaseConfiguration
     }
 
     /**
-     * @return string
-     */
-    public function getConnect()
-    {
-        return $this->connect;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
      * @return mixed
      */
     public function getDatabaseName()
     {
         return $this->databaseName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
 } 

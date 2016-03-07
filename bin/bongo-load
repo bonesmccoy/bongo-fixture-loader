@@ -14,7 +14,7 @@ if (is_file($autoload = $cwd . '/vendor/autoload.php')) {
 }
 
 try {
-    $fixtureLoader = new Bones\Component\Mongo\FixtureLoader(
+    $fixtureLoader = new Bones\Component\Mongo\Loader(
         $cwd,
         $cwd . "/config/config.test.yml"
     );
