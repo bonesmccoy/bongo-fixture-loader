@@ -51,8 +51,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
     public function testAddFixturesFromFile()
     {
         $fixtureFileContent = $this->getFixtureFileContent();
-        $fixtureDirectory = "/tmp/test";
-        $fixtureFilePath = $this->createYmlFile($fixtureDirectory, $fixtureFileContent);
+        $fixtureFilePath = $this->createYmlFile("fixtures", $fixtureFileContent);
 
         $this->loader->addFixturesFromFile($fixtureFilePath);
 
@@ -69,10 +68,9 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
     public function testAddFixturesFromDirectory()
     {
         $fixtureFileContent = $this->getFixtureFileContent();
-        $fixtureDirectory = "/tmp/test";
-        $this->createYmlFile($fixtureDirectory, $fixtureFileContent);
+        $this->createYmlFile("fixtures", $fixtureFileContent);
 
-        $this->loader->addFixturesFromDirectory($fixtureDirectory);
+        $this->loader->addFixturesFromDirectory($this->getTemporaryDirectory() . "/fixtures");
 
         $loadedFixtures = $this->loader->getLoadedFixtures();
         $this->assertCount(
@@ -86,18 +84,18 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFixturesFromConfigurationFile()
     {
-        $this->createYmlFile("/tmp/test", $this->getFixtureFileContent());
+        $this->createYmlFile("test", $this->getFixtureFileContent());
 
-        $configDirectory = "/tmp/fixtures-config";
+        $temporaryDirectory = $this->getTemporaryDirectory();
 
         $configYmlContent = <<<CFG
 fixtures:
     paths:
-        - /tmp/test
+        - {$temporaryDirectory}/test
 
 CFG;
 
-        $configFile = $this->createYmlFile($configDirectory, $configYmlContent);
+        $configFile = $this->createYmlFile("config", $configYmlContent);
 
         $this->loader->addFixturesFromConfiguration($configFile);
 
@@ -142,14 +140,25 @@ YML;
      */
     private function createYmlFile($containerDirectory, $ymlContent)
     {
+        $containerDirectory = $this->getTemporaryDirectory() . "/" . $containerDirectory;
+
         if (!is_dir($containerDirectory)) {
             mkdir($containerDirectory);
         }
-        $fixtureFilePath = $containerDirectory . "/fixture.yml";
+        $fixtureFilePath = $containerDirectory . "/bongo.yml";
         $fh = fopen($fixtureFilePath, "w");
         fwrite($fh, $ymlContent);
         fclose($fh);
         return $fixtureFilePath;
+    }
+
+    /**
+     * @return string
+     */
+    private function getTemporaryDirectory()
+    {
+        $rootFixtureDir = getEnv('TEMP_FIXTURE_DIR');
+        return $rootFixtureDir;
     }
 
 }
