@@ -20,7 +20,7 @@ try {
         $bongoConfigurationFile
     );
 
-    $fixtureLoader->addFixturesFromConfiguration($bongoConfigurationFile);
+    $fixtureLoader->addFixturesFromConfiguration($bongoConfigurationFile, $cwd);
     $fixtureLoader->persistLoadedFixtures();
 
     $fixtureLoader->dumpMessages();
