@@ -27,4 +27,7 @@ interface LoaderInterface
 
     public function persistLoadedFixtures();
 
+
+    public function dumpMessages();
+
 }

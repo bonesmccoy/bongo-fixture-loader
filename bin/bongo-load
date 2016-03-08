@@ -23,6 +23,8 @@ try {
     $fixtureLoader->addFixturesFromConfiguration($bongoConfigurationFile);
     $fixtureLoader->persistLoadedFixtures();
 
+    $fixtureLoader->dumpMessages();
+
 } Catch(\Exception $e) {
     fwrite(STDERR,
        "Error: " . $e->getMessage()

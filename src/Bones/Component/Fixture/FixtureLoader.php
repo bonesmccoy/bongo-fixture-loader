@@ -113,6 +113,13 @@ class FixtureLoader implements LoaderInterface
         }
     }
 
+    public function dumpMessages()
+    {
+        echo implode("\n", $this->messages) . "\n";
+    }
+
+
+
     public static function factoryMongoFixtureLoader($configFile)
     {
         $dataStore = new MongoDataStore(Yaml::parse(file_get_contents($configFile)));
