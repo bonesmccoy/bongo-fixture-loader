@@ -36,7 +36,8 @@ class FixtureLoader implements LoaderInterface
         $config = $this->parser->parse($fixtureConfigurationFile);
 
         if (!isset($config['fixtures']['paths'])) {
-            throw new \InvalidArgumentException("Fixture configuration not found in configuration file");
+            throw new \InvalidArgumentException(
+                sprintf("Fixture configuration not found in configuration file: %s\n DUMP: %s", $fixtureConfigurationFile, json_encode($config)));
         }
 
         $absolute = (!empty($applicationRoot));

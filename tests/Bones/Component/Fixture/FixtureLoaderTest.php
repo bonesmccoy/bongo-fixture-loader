@@ -67,8 +67,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFixturesFromDirectory()
     {
-        $fixtureFileContent = $this->getFixtureFileContent();
-        $this->createYmlFile("fixtures", $fixtureFileContent);
+        $this->createYmlFile("fixtures", $this->getFixtureFileContent());
 
         $this->loader->addFixturesFromDirectory($this->getTemporaryDirectory() . "/fixtures");
 
@@ -84,7 +83,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFixturesFromConfigurationFile()
     {
-        $this->createYmlFile("test", $this->getFixtureFileContent());
+        $this->createYmlFile("fixtures", $this->getFixtureFileContent());
 
         $temporaryDirectory = $this->getTemporaryDirectory();
 
@@ -137,6 +136,7 @@ YML;
      * @param $containerDirectory
      * @param $ymlContent
      * @return string
+     * @throws \Exception
      */
     private function createYmlFile($containerDirectory, $ymlContent)
     {
