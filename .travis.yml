@@ -1,0 +1,15 @@
+language: php
+php:
+  - 5.4
+  - 5.6
+
+env:
+    - TEMP_FIXTURE_DIR=$TRAVIS_BUILD_DIR/tmp
+
+before_script:
+  - mkdir -p tmp
+  - phpenv config-add config.travis.ini
+  - composer update
+
+script:
+  - phpunit --config phpunit.travis.xml

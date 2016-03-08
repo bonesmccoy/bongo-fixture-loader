@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bones\Component\Mongo;
+namespace Bones\Component\Fixture\Mongo\Data;
 
 
 class DatabaseConfiguration
@@ -9,11 +9,11 @@ class DatabaseConfiguration
 
     public function __construct($config)
     {
-        if (!isset($config['db'])) {
+        if (!isset($config['mongo_data_store'])) {
             throw new \InvalidArgumentException("Missing db configuration in config file.");
         }
 
-        $config = $config['db'];
+        $config = $config['mongo_data_store'];
         if (!isset($config['db_name'])) {
             throw new \InvalidArgumentException("Missing db name on configuration");
         }
@@ -44,51 +44,11 @@ class DatabaseConfiguration
     }
 
     /**
-     * @return string
-     */
-    public function getConnect()
-    {
-        return $this->connect;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
      * @return mixed
      */
     public function getDatabaseName()
     {
         return $this->databaseName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
 } 
