@@ -15,21 +15,21 @@ Installation
 Configuration
 -------------
 
-Create a yaml file into ```/yourprojectRoot/config/config.test.yml```
+Create a yaml file into ```/yourprojectRoot/config/bongo.yml```
 
 .. code-block:: yaml
 
-    config:
-      db:
-        db_name: messages_test
+    
+    mongo_data_store:
+        db_name: your_db_name
         host: localhost
         port: 27017
         username: ''
         password: ''
         connect: true
     
-      fixtures:
-          paths:
+    fixtures:
+        paths:
             - path/to/fixture/from/project/root
 
 
