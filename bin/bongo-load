@@ -14,12 +14,17 @@ if (is_file($autoload = $cwd . '/vendor/autoload.php')) {
 }
 
 try {
-    $fixtureLoader = new Bones\Component\Mongo\FixtureLoader(
-        $cwd,
-        $cwd . "/config/config.test.yml"
+
+    $bongoConfigurationFile = $cwd . "/config/bongo.yml";
+    $fixtureLoader = Bones\Component\Fixture\FixtureLoader::factoryMongoFixtureLoader(
+        $bongoConfigurationFile
     );
 
-    $fixtureLoader->run();
+    $fixtureLoader->addFixturesFromConfiguration($bongoConfigurationFile, $cwd);
+    $fixtureLoader->persistLoadedFixtures();
+
+    $fixtureLoader->dumpMessages();
+
 } Catch(\Exception $e) {
     fwrite(STDERR,
        "Error: " . $e->getMessage()
