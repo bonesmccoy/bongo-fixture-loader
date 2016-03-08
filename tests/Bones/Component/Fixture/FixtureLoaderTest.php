@@ -143,7 +143,10 @@ YML;
         $containerDirectory = $this->getTemporaryDirectory() . "/" . $containerDirectory;
 
         if (!is_dir($containerDirectory)) {
-            mkdir($containerDirectory);
+            @mkdir($containerDirectory);
+            if (!is_dir($containerDirectory)) {
+                throw new \Exception("unable to write in $containerDirectory");
+            }
         }
         $fixtureFilePath = $containerDirectory . "/bongo.yml";
         $fh = fopen($fixtureFilePath, "w");
