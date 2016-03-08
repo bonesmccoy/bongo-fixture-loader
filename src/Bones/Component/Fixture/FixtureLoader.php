@@ -106,7 +106,7 @@ class FixtureLoader implements LoaderInterface
         $this->messages = array();
         foreach ($this->fixtures as $collection => $fixtures) {
             $this->messages[] = sprintf(
-                "Adding %s fixture to the collection %s\n",
+                "Adding %s fixture to the collection %s",
                 count($fixtures),
                 $collection
             );
