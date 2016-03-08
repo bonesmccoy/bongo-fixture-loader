@@ -152,6 +152,7 @@ YML;
         $fh = fopen($fixtureFilePath, "w");
         fwrite($fh, $ymlContent);
         fclose($fh);
+        
         return $fixtureFilePath;
     }
 

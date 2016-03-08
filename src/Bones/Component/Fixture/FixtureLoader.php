@@ -33,7 +33,7 @@ class FixtureLoader implements LoaderInterface
 
     public function addFixturesFromConfiguration($fixtureConfigurationFile, $applicationRoot = '')
     {
-        $config = $this->parser->parse($fixtureConfigurationFile);
+        $config = $this->parser->parse(file_get_contents($fixtureConfigurationFile));
 
         if (!isset($config['fixtures']['paths'])) {
             throw new \InvalidArgumentException(
