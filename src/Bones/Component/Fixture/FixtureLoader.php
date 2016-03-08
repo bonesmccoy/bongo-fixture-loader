@@ -11,6 +11,9 @@ use Symfony\Component\Yaml\Yaml;
 class FixtureLoader implements LoaderInterface
 {
 
+    const LOADER_MONGO = 'mongo';
+    const LOADER_MEMORY = 'memory';
+
     protected $parser;
 
     /**
@@ -118,8 +121,10 @@ class FixtureLoader implements LoaderInterface
         echo implode("\n", $this->messages) . "\n";
     }
 
-
-
+    /**
+     * @param $configFile
+     * @return FixtureLoader
+     */
     public static function factoryMongoFixtureLoader($configFile)
     {
         $dataStore = new MongoDataStore(Yaml::parse(file_get_contents($configFile)));
@@ -127,6 +132,9 @@ class FixtureLoader implements LoaderInterface
         return new FixtureLoader($dataStore);
     }
 
+    /**
+     * @return FixtureLoader
+     */
     public static function factoryInMemoryFixtureLoader()
     {
         $dataStore = new InMemoryDataStore();
