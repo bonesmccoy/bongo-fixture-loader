@@ -90,7 +90,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
         $configYmlContent = <<<CFG
 fixtures:
     paths:
-        - {$temporaryDirectory}/test
+        - {$temporaryDirectory}/fixtures
 
 CFG;
 
