@@ -4,6 +4,8 @@
 namespace Bones\Component\Fixture;
 
 
+use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
+use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
 use Symfony\Component\Yaml\Yaml;
 
 class FixtureLoader implements LoaderInterface
@@ -23,7 +25,7 @@ class FixtureLoader implements LoaderInterface
      */
     protected $dataStoreWriter;
 
-    public function __construct(DataStoreInterface $dataStoreWriter)
+    private function __construct(DataStoreInterface $dataStoreWriter)
     {
         $this->parser = new Yaml();
         $this->dataStoreWriter = $dataStoreWriter;
@@ -103,6 +105,20 @@ class FixtureLoader implements LoaderInterface
             $this->dataStoreWriter->emptyDataStore($collection);
             $this->dataStoreWriter->persist($collection, $fixtures);
         }
+    }
+
+    public static function factoryMongoFixtureLoader($configFile)
+    {
+        $dataStore = new MongoDataStore(Yaml::parse(file_get_contents($configFile)));
+
+        return new FixtureLoader($dataStore);
+    }
+
+    public static function factoryInMemoryFixtureLoader()
+    {
+        $dataStore = new InMemoryDataStore();
+
+        return new FixtureLoader($dataStore);
     }
 
 }

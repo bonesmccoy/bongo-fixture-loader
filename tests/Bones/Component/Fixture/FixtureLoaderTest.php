@@ -5,8 +5,6 @@ namespace tests\Bones\Component\Fixture;
 
 
 use Bones\Component\Fixture\FixtureLoader;
-use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
-
 
 class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,8 +16,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $dataStore = new InMemoryDataStore();
-        $this->loader = new FixtureLoader($dataStore);
+        $this->loader = FixtureLoader::factoryInMemoryFixtureLoader();
     }
 
 

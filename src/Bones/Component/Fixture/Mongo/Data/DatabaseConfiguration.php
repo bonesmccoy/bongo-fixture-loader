@@ -9,11 +9,11 @@ class DatabaseConfiguration
 
     public function __construct($config)
     {
-        if (!isset($config['db'])) {
+        if (!isset($config['mongo_data_store'])) {
             throw new \InvalidArgumentException("Missing db configuration in config file.");
         }
 
-        $config = $config['db'];
+        $config = $config['mongo_data_store'];
         if (!isset($config['db_name'])) {
             throw new \InvalidArgumentException("Missing db name on configuration");
         }
