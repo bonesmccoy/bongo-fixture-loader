@@ -9,7 +9,7 @@ use Bones\Component\Fixture\DataStoreInterface;
 class MongoDataStore implements DataStoreInterface
 {
     /**
-     * @var DatabaseConfiguration
+     * @var DatabaseConfigurationReader
      */
     protected $databaseConfiguration;
 
@@ -21,7 +21,7 @@ class MongoDataStore implements DataStoreInterface
 
     public function __construct($dataStoreConfiguration)
     {
-        $this->databaseConfiguration = new DatabaseConfiguration($dataStoreConfiguration);
+        $this->databaseConfiguration = new DatabaseConfigurationReader($dataStoreConfiguration);
         $this->dataStoreWriter = new \MongoClient(
             $this->databaseConfiguration->getConnectionUrl(),
             $this->databaseConfiguration->getConnectionOptions()

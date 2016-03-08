@@ -4,7 +4,7 @@
 namespace Bones\Component\Fixture\Mongo\Data;
 
 
-class DatabaseConfiguration
+class DatabaseConfigurationReader
 {
 
     public function __construct($config)
@@ -14,7 +14,7 @@ class DatabaseConfiguration
         }
 
         $config = $config['mongo_data_store'];
-        if (!isset($config['db_name'])) {
+        if (empty($config['db_name'])) {
             throw new \InvalidArgumentException("Missing db name on configuration");
         }
         $this->databaseName = $config['db_name'] ;
@@ -29,7 +29,7 @@ class DatabaseConfiguration
     {
         return sprintf("mongodb://%s%s%s%s/%s",
             ($this->username) ? "{$this->username}:" : '',
-            ($this->password) ? "{$this->password}:" : "",
+            ($this->password) ? "{$this->password}@" : "",
             $this->host,
             ":{$this->port}",
             $this->databaseName
