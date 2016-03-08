@@ -27,4 +27,12 @@ class InMemoryDataStore implements DataStoreInterface
     {
         $this->data[$collection] = $fixtures;
     }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }
