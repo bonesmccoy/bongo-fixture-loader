@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Bones\Component\Fixture;
-
 
 use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
@@ -10,7 +8,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class FixtureLoader implements LoaderInterface
 {
-
     const LOADER_MONGO = 'mongo';
     const LOADER_MEMORY = 'memory';
 
@@ -51,13 +48,12 @@ class FixtureLoader implements LoaderInterface
         $absolute = (!empty($applicationRoot));
         foreach ($config['fixtures']['paths'] as $fixturesPath) {
             $fixtureDirectoryPath = sprintf(
-                "%s%s",
-                ($absolute) ? ($applicationRoot . "/") : "",
+                '%s%s',
+                ($absolute) ? ($applicationRoot.'/') : '',
                 $fixturesPath
             );
             $this->addFixturesFromDirectory($fixtureDirectoryPath);
         }
-
     }
 
     /**
@@ -65,11 +61,10 @@ class FixtureLoader implements LoaderInterface
      */
     public function addFixturesFromDirectory($fixtureDirectoryPath)
     {
-        foreach (glob($fixtureDirectoryPath . "/*yml") as $file) {
+        foreach (glob($fixtureDirectoryPath.'/*yml') as $file) {
             $this->addFixturesFromFile($file);
         }
     }
-
 
     /**
      * @param $fixtureFile
@@ -106,7 +101,7 @@ class FixtureLoader implements LoaderInterface
         $this->messages = array();
         foreach ($this->fixtures as $collection => $fixtures) {
             $this->messages[] = sprintf(
-                "Adding %s fixture to the collection %s",
+                'Adding %s fixture to the collection %s',
                 count($fixtures),
                 $collection
             );
@@ -118,18 +113,19 @@ class FixtureLoader implements LoaderInterface
 
     public function dumpMessages()
     {
-        echo implode("\n", $this->messages) . "\n";
+        echo implode("\n", $this->messages)."\n";
     }
 
     /**
      * @param $configFile
+     *
      * @return FixtureLoader
      */
     public static function factoryMongoFixtureLoader($configFile)
     {
         $dataStore = new MongoDataStore(Yaml::parse(file_get_contents($configFile)));
 
-        return new FixtureLoader($dataStore);
+        return new self($dataStore);
     }
 
     /**
@@ -139,7 +135,6 @@ class FixtureLoader implements LoaderInterface
     {
         $dataStore = new InMemoryDataStore();
 
-        return new FixtureLoader($dataStore);
+        return new self($dataStore);
     }
-
 }
