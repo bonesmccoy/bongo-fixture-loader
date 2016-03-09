@@ -1,14 +1,11 @@
 <?php
 
-
 namespace tests\Bones\Component\Fixture\Mongo\Data;
-
 
 use Bones\Component\Fixture\Mongo\Data\DatabaseConfigurationReader;
 
 class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testConfiguration()
     {
         $fullDataStore = array(
@@ -17,7 +14,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
             'username' => '',
             'password' => '',
             'db_name' => 'test-db',
-            'connect' => true
+            'connect' => true,
         );
 
         $config = array('mongo_data_store' => $fullDataStore);
@@ -25,7 +22,6 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
         $dbConfiguration = new DatabaseConfigurationReader($config);
 
         $this->assertInstanceof('\Bones\Component\Fixture\Mongo\Data\DatabaseConfigurationReader', $dbConfiguration);
-
     }
 
     public function testConfigurationWithDefaultValues()
@@ -35,7 +31,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
         $dbConfiguration = new DatabaseConfigurationReader($config);
 
         $this->assertEquals(
-            "mongodb://localhost:27017/test-db",
+            'mongodb://localhost:27017/test-db',
             $dbConfiguration->getConnectionUrl()
         );
     }
@@ -48,7 +44,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
             'username' => 'username',
             'password' => 'password',
             'db_name' => 'test-db',
-            'connect' => true
+            'connect' => true,
         );
 
         $config = array('mongo_data_store' => $fullDataStore);
@@ -56,7 +52,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
         $dbConfiguration = new DatabaseConfigurationReader($config);
 
         $this->assertEquals(
-            "mongodb://username:password@localhost:27017/test-db",
+            'mongodb://username:password@localhost:27017/test-db',
             $dbConfiguration->getConnectionUrl()
         );
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Bones\Component\Fixture\Mongo\Data;
-
 
 use Bones\Component\Fixture\DataStoreInterface;
 
@@ -17,7 +15,6 @@ class MongoDataStore implements DataStoreInterface
      * @var \MongoClient
      */
     private $dataStoreWriter;
-
 
     public function __construct($dataStoreConfiguration)
     {
@@ -39,7 +36,7 @@ class MongoDataStore implements DataStoreInterface
 
     /**
      * @param string $collection
-     * @param array $fixtures
+     * @param array  $fixtures
      */
     public function persist($collection, $fixtures)
     {
