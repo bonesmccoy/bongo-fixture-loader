@@ -14,8 +14,12 @@ if (is_file($autoload = $cwd . '/vendor/autoload.php')) {
 }
 
 try {
+    if ($argv[1]) {
+        $bongoConfigurationFile = $argv[1];
+    } else {
+        $bongoConfigurationFile = $cwd . "/config/bongo.yml";
+    }
 
-    $bongoConfigurationFile = $cwd . "/config/bongo.yml";
     $fixtureLoader = Bones\Component\Fixture\FixtureLoader::factoryMongoFixtureLoader(
         $bongoConfigurationFile
     );

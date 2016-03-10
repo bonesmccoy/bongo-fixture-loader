@@ -63,7 +63,7 @@ Load fixtures:
 
 .. code-block:: bash
     
-    $ bin/bongo-load
+    $ bin/bongo-load /path/to/bongo.yml
 
 
 Requirements
