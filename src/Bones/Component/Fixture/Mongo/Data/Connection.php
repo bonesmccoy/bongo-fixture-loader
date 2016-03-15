@@ -26,7 +26,7 @@ class Connection
      */
     private $connect;
 
-    public function __construct($databaseName, $host ='localhost', $port = '27017', $username = '', $password = '', $connect = true)
+    public function __construct($databaseName, $host = 'localhost', $port = '27017', $username = '', $password = '', $connect = true)
     {
         $this->databaseName = $databaseName;
         $this->host = $host;
