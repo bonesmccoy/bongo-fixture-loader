@@ -5,6 +5,9 @@ php:
 
 env:
     - TEMP_FIXTURE_DIR=$TRAVIS_BUILD_DIR/tmp
+    
+services:
+    - mongodb
 
 before_script:
   - mkdir -p tmp
