@@ -2,13 +2,13 @@
 
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
-use Bones\Component\Fixture\Mongo\Data\DatabaseConfigurationReader;
+use Bones\Component\Fixture\Mongo\Data\Connection;
 
 class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfiguration()
     {
-        $fullDataStore = array(
+        $config = array(
             'host' => 'localhost',
             'port' => '27017',
             'username' => '',
@@ -17,18 +17,14 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
             'connect' => true,
         );
 
-        $config = array('mongo_data_store' => $fullDataStore);
+        $dbConfiguration = Connection::createFromConfiguration($config);
 
-        $dbConfiguration = new DatabaseConfigurationReader($config);
-
-        $this->assertInstanceof('\Bones\Component\Fixture\Mongo\Data\DatabaseConfigurationReader', $dbConfiguration);
+        $this->assertInstanceof('\Bones\Component\Fixture\Mongo\Data\Connection', $dbConfiguration);
     }
 
     public function testConfigurationWithDefaultValues()
     {
-        $config = array('mongo_data_store' => array('db_name' => 'test-db'));
-
-        $dbConfiguration = new DatabaseConfigurationReader($config);
+        $dbConfiguration = Connection::createFromConfiguration(array('db_name' => 'test-db'));
 
         $this->assertEquals(
             'mongodb://localhost:27017/test-db',
@@ -38,7 +34,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testConfigurationWithUsernameAndPassword()
     {
-        $fullDataStore = array(
+        $config = array(
             'host' => 'localhost',
             'port' => '27017',
             'username' => 'username',
@@ -47,9 +43,7 @@ class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
             'connect' => true,
         );
 
-        $config = array('mongo_data_store' => $fullDataStore);
-
-        $dbConfiguration = new DatabaseConfigurationReader($config);
+        $dbConfiguration = Connection::createFromConfiguration($config);
 
         $this->assertEquals(
             'mongodb://username:password@localhost:27017/test-db',
