@@ -4,7 +4,7 @@ namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 use Bones\Component\Fixture\Mongo\Data\Connection;
 
-class DatabaseConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfiguration()
     {
