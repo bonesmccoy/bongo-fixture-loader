@@ -3,8 +3,8 @@
 namespace tests\Bones\Component\Fixture\Mongo;
 
 
-use Bones\Component\Fixture\Mongo\Matcher\IdentityTransformer;
-use Bones\Component\Fixture\Mongo\Matcher\ReferenceTransformer;
+use Bones\Component\Fixture\Mongo\Transformer\IdentityTransformer;
+use Bones\Component\Fixture\Mongo\Transformer\ReferenceTransformer;
 
 class MatchersTest extends \PHPUnit_Framework_TestCase
 {

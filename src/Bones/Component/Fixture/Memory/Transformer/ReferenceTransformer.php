@@ -1,23 +1,13 @@
 <?php
 
-namespace Bones\Component\Fixture\Mongo\Matcher;
+
+namespace Bones\Component\Fixture\Memory\Transformer;
 
 
 use Bones\Component\Fixture\Parser\TransformerInterface;
-use Bones\Component\Mongo\Utilities;
 
 class ReferenceTransformer implements TransformerInterface
 {
-
-
-
-    private $timestamp;
-
-    public function __construct($timestamp)
-    {
-
-        $this->timestamp = $timestamp;
-    }
 
     /**
      * @param $key
@@ -35,14 +25,12 @@ class ReferenceTransformer implements TransformerInterface
 
     public function convert($key, $value)
     {
+        if (is_array($value)) return $value;
+
         $matches = array();
 
         preg_match(self::REFERENCE_PATTERN, $value, $matches);
 
-        $plainId = $matches[1];
-
-        $mongoID = Utilities::generateMongoId($this->timestamp, $plainId);
-
-        return $mongoID;
+        return $matches[1];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bones\Component\Fixture\Mongo\Matcher;
+namespace Bones\Component\Fixture\Mongo\Transformer;
 
 
 use Bones\Component\Fixture\Parser\TransformerInterface;
