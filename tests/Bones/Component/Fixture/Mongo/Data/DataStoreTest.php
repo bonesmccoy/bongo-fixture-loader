@@ -1,11 +1,11 @@
 <?php
 
-namespace Bones\Component\Fixture\Mongo\Data;
+namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 
-use Bones\Component\Fixture\FixtureParser;
+use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
+use Bones\Component\Fixture\Mongo\FixtureParser;
 use Bones\Component\Mongo\Connection;
-use Bones\Component\Mongo\QueryBuilder;
 
 class DataStoreTest extends \PHPUnit_Framework_TestCase
 {
@@ -75,7 +75,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
 
             $this->assertInstanceOf(
                 '\MongoId',
-                $document['referenceId']
+                $document['referencedId']
             );
         }
 

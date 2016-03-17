@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Bones\Component\Fixture\Mongo;
+namespace tests\Bones\Component\Fixture\Mongo;
 
 
-use Bones\Component\Fixture\FixtureParser;
+use Bones\Component\Fixture\Mongo\FixtureParser;
 use Bones\Component\Fixture\Mongo\Matcher\IdentityTransformer;
 use Bones\Component\Fixture\Mongo\Matcher\ReferenceTransformer;
 
@@ -19,11 +19,6 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
         );
 
         $parser = new FixtureParser();
-
-        $timestamp = strtotime('now');
-        $parser->addTransformer(new IdentityTransformer($timestamp));
-        $parser->addTransformer(new ReferenceTransformer($timestamp));
-
 
         $parsedFixture = $parser->parse($fixture);
 
@@ -44,11 +39,6 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
         );
 
         $parser = new FixtureParser();
-
-        $timestamp = strtotime('now');
-        $parser->addTransformer(new IdentityTransformer($timestamp));
-        $parser->addTransformer(new ReferenceTransformer($timestamp));
-
 
         $parsedFixture = $parser->parse($fixture);
 

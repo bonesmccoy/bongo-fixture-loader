@@ -6,7 +6,7 @@
  * Time: 10:57
  */
 
-namespace Bones\Component\Fixture;
+namespace Bones\Component\Fixture\Mongo;
 
 
 use Bones\Component\Fixture\Mongo\Matcher\IdentityTransformer;
@@ -31,6 +31,8 @@ class FixtureParser implements FixtureParserInterface
     public function __construct()
     {
         $this->timestamp = strtotime('now');
+        $this->addTransformer(new IdentityTransformer($this->timestamp));
+        $this->addTransformer(new ReferenceTransformer($this->timestamp));
     }
 
     public function parse($fixture) {
@@ -51,6 +53,8 @@ class FixtureParser implements FixtureParserInterface
                 return $matcher->convert($key, $value);
             }
         }
+
+        return $value;
     }
 
     /**
