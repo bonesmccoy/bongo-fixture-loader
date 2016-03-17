@@ -4,9 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c4fcaaebae5c695463f7cebf391dee31",
-    "content-hash": "24f59fdfd7408ef841be9b4ea2111dc8",
+    "hash": "dab6079fc81cdeb8592a85889589b3f8",
+    "content-hash": "8314194749c58445be0251a2cfa28062",
     "packages": [
+        {
+            "name": "bonesmccoy/bones-component-mongo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bonesmccoy/bones-component-mongo.git",
+                "reference": "2ef4ca0e07cb072c7ff1f7e847369a46db638e83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bonesmccoy/bones-component-mongo/zipball/2ef4ca0e07cb072c7ff1f7e847369a46db638e83",
+                "reference": "2ef4ca0e07cb072c7ff1f7e847369a46db638e83",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src"
+                }
+            },
+            "support": {
+                "source": "https://github.com/bonesmccoy/bones-component-mongo/tree/master",
+                "issues": "https://github.com/bonesmccoy/bones-component-mongo/issues"
+            },
+            "time": "2016-03-17 10:53:26"
+        },
         {
             "name": "symfony/yaml",
             "version": "v3.0.3",
@@ -965,7 +997,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bonesmccoy/bones-component-mongo": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

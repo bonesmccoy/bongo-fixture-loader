@@ -2,7 +2,8 @@
 
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
-use Bones\Component\Fixture\Mongo\Data\Connection;
+
+use Bones\Component\Mongo\Connection;
 
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +20,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
         $dbConfiguration = Connection::createFromConfiguration($config);
 
-        $this->assertInstanceof('\Bones\Component\Fixture\Mongo\Data\Connection', $dbConfiguration);
+        $this->assertInstanceof('\Bones\Component\Mongo\Connection', $dbConfiguration);
     }
 
     public function testConfigurationWithDefaultValues()

@@ -1,20 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bonesmccoy
- * Date: 17/03/2016
- * Time: 11:05
- */
 
-namespace Bones\Component\Fixture\Parser;
+namespace Bones\Component\Fixture\Mongo\Matcher;
 
 
+use Bones\Component\Fixture\Parser\TransformerInterface;
 use Bones\Component\Mongo\Utilities;
 
-class SelfReferenceMatcher implements MatcherInterface
+class ReferenceTransformer implements TransformerInterface
 {
 
-    const PATTERN = '/^\_self\[([0-9])+\]$/';
+
 
     private $timestamp;
 
@@ -33,7 +28,7 @@ class SelfReferenceMatcher implements MatcherInterface
     {
         $matches = array();
 
-        preg_match(self::PATTERN, $value, $matches);
+        preg_match(self::REFERENCE_PATTERN, $value, $matches);
 
         return count($matches) > 1;
     }
@@ -42,12 +37,12 @@ class SelfReferenceMatcher implements MatcherInterface
     {
         $matches = array();
 
-        preg_match(self::PATTERN, $value, $matches);
+        preg_match(self::REFERENCE_PATTERN, $value, $matches);
 
         $plainId = $matches[1];
 
         $mongoID = Utilities::generateMongoId($this->timestamp, $plainId);
 
-        return (string) $mongoID;
+        return $mongoID;
     }
 }

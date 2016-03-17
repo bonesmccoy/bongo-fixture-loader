@@ -1,20 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bonesmccoy
- * Date: 17/03/2016
- * Time: 11:05
- */
-
-namespace Bones\Component\Fixture\Parser;
 
 
+namespace Bones\Component\Fixture\Mongo\Matcher;
+
+
+use Bones\Component\Fixture\Parser\TransformerInterface;
 use Bones\Component\Mongo\Utilities;
 
-class IdentityMatcher implements MatcherInterface
+class IdentityTransformer implements TransformerInterface
 {
 
-    const KEY_ID = "_id";
 
     private $timestamp;
 
@@ -31,7 +26,7 @@ class IdentityMatcher implements MatcherInterface
      */
     public function match($key, $value)
     {
-        return ($key === self::KEY_ID);
+        return ($key === self::IDENTITY_PATTERN);
     }
 
     /**

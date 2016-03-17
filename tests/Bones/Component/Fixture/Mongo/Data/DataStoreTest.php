@@ -2,23 +2,83 @@
 
 namespace Bones\Component\Fixture\Mongo\Data;
 
+
+use Bones\Component\Fixture\FixtureParser;
+use Bones\Component\Mongo\Connection;
+use Bones\Component\Mongo\QueryBuilder;
+
 class DataStoreTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreationWithCorrectConfiguration()
+    /**
+     * @var MongoDataStore
+     */
+    private $dataStore;
+
+    /**
+     * @var \MongoClient
+     */
+    private $client;
+
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    /** @var  string */
+    private $collection;
+
+    public function setUp()
     {
-        $config = array(
-            'mongo_data_store' => array(
-                'host' => 'localhost',
-                'port' => '27017',
-                'username' => '',
-                'password' => '',
-                'db_name' => 'test-db',
-                'connect' => true,
-            ),
+        $mongoConfig = array(
+            'host' => 'localhost',
+            'port' => '27017',
+            'username' => '',
+            'password' => '',
+            'db_name' => 'test-db',
+            'connect' => true,
         );
 
-        $dataStore = new MongoDataStore($config);
+        $mongoDataStore = array(
+            'mongo_data_store' => $mongoConfig,
+        );
 
-        $this->assertInstanceOf('\Bones\Component\Fixture\Mongo\Data\MongoDataStore', $dataStore);
+        $this->connection = Connection::createFromConfiguration($mongoConfig);
+        $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
+        $this->collection = 'collection-test';
+        $this->dataStore = new MongoDataStore($mongoDataStore, new FixtureParser());
+
+        $this->dataStore->emptyDataStore($this->collection);
+    }
+
+    public function testCreationWithCorrectConfiguration()
+    {
+        $this->assertInstanceOf('\Bones\Component\Fixture\Mongo\Data\MongoDataStore', $this->dataStore);
+    }
+
+    public function testPersist()
+    {
+        $fixture = array(
+            '_id' => 1,
+            'name' => 'ted',
+            'referencedId' => "ref:1"
+        );
+
+        $collection = $this->collection;
+        $databaseName = $this->connection->getDatabaseName();
+
+        $this->dataStore->persist($collection, array($fixture));
+
+        foreach ( $this->client->$databaseName->$collection->find() as $document) {
+            $this->assertInstanceOf(
+                '\MongoId', $document['_id']
+            );
+
+            $this->assertInstanceOf(
+                '\MongoId',
+                $document['referenceId']
+            );
+        }
+
+
     }
 }
