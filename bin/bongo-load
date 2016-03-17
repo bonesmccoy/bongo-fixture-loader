@@ -14,11 +14,20 @@ if (is_file($autoload = $cwd . '/vendor/autoload.php')) {
 }
 
 try {
-    if ($argv[1]) {
+    if (!empty($argv[1])) {
         $bongoConfigurationFile = $argv[1];
     } else {
         $bongoConfigurationFile = $cwd . "/config/bongo.yml";
+        fwrite(STDOUT, "No configuration file provided. Loading Default." . PHP_EOL);
     }
+
+    if (!file_exists($bongoConfigurationFile)) {
+        fwrite(STDERR,
+            sprintf("Warning, file %s doesn't exists" . PHP_EOL, $bongoConfigurationFile)
+        );
+        exit(1);
+    }
+
 
     $fixtureLoader = Bones\Component\Fixture\FixtureLoader::factoryMongoFixtureLoader(
         $bongoConfigurationFile
@@ -31,7 +40,7 @@ try {
 
 } Catch(\Exception $e) {
     fwrite(STDERR,
-       "Error: " . $e->getMessage()
+       "Error: " . $e->getMessage() . PHP_EOL
     );
     exit(1);
 }
