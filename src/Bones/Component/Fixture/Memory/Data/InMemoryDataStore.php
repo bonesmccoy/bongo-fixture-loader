@@ -15,7 +15,6 @@ class InMemoryDataStore implements DataStoreInterface
 
     public function __construct(FixtureParserInterface $fixtureParser)
     {
-
         $this->fixtureParser = $fixtureParser;
     }
 
@@ -47,6 +46,7 @@ class InMemoryDataStore implements DataStoreInterface
 
     /**
      * @param $fixtures
+     *
      * @return mixed
      */
     private function applyParsing($fixtures)
@@ -54,6 +54,7 @@ class InMemoryDataStore implements DataStoreInterface
         foreach ($fixtures as $id => $fixture) {
             $fixtures[$id] = $this->fixtureParser->parse($fixture);
         }
+
         return $fixtures;
     }
 }

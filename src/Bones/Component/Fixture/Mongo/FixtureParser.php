@@ -2,16 +2,12 @@
 
 namespace Bones\Component\Fixture\Mongo;
 
-
 use Bones\Component\Fixture\Mongo\Transformer\IdentityTransformer;
 use Bones\Component\Fixture\Mongo\Transformer\ReferenceTransformer;
 use Bones\Component\Fixture\Parser\AbstractFixtureParser;
 
-
 class FixtureParser extends AbstractFixtureParser
 {
-
-
     private $timestamp;
 
     /**
@@ -23,6 +19,4 @@ class FixtureParser extends AbstractFixtureParser
         $this->addTransformer(new IdentityTransformer($this->timestamp));
         $this->addTransformer(new ReferenceTransformer($this->timestamp));
     }
-
-
 }

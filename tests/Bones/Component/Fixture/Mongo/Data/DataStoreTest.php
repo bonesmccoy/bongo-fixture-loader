@@ -2,7 +2,6 @@
 
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
-
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
 use Bones\Component\Fixture\Mongo\FixtureParser;
 use Bones\Component\Mongo\Connection;
@@ -60,7 +59,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
         $fixture = array(
             '_id' => 1,
             'name' => 'ted',
-            'referencedId' => "ref:1"
+            'referencedId' => 'ref:1',
         );
 
         $collection = $this->collection;
@@ -68,7 +67,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
 
         $this->dataStore->persist($collection, array($fixture));
 
-        foreach ( $this->client->$databaseName->$collection->find() as $document) {
+        foreach ($this->client->$databaseName->$collection->find() as $document) {
             $this->assertInstanceOf(
                 '\MongoId', $document['_id']
             );
@@ -78,7 +77,5 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
                 $document['referencedId']
             );
         }
-
-
     }
 }

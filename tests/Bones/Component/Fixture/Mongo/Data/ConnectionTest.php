@@ -2,7 +2,6 @@
 
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
-
 use Bones\Component\Mongo\Connection;
 
 class ConnectionTest extends \PHPUnit_Framework_TestCase

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Bones\Component\Fixture\Parser;
-
 
 abstract class AbstractFixtureParser implements FixtureParserInterface
 {
@@ -11,15 +9,14 @@ abstract class AbstractFixtureParser implements FixtureParserInterface
      */
     protected $transformers;
 
-    public function parse($fixture) {
-
-        foreach($fixture as $key => $value) {
+    public function parse($fixture)
+    {
+        foreach ($fixture as $key => $value) {
             $fixture[$key] = $this->strategy($key, $value);
         }
 
         return $fixture;
     }
-
 
     private function strategy($key, $value)
     {

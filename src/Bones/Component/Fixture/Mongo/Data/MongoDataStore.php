@@ -60,6 +60,7 @@ class MongoDataStore implements DataStoreInterface
 
     /**
      * @param $fixtures
+     *
      * @return mixed
      */
     private function applyParsing($fixtures)
@@ -67,6 +68,7 @@ class MongoDataStore implements DataStoreInterface
         foreach ($fixtures as $id => $fixture) {
             $fixtures[$id] = $this->fixtureParser->parse($fixture);
         }
+
         return $fixtures;
     }
 }

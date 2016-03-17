@@ -1,19 +1,16 @@
 <?php
 
-
 namespace tests\Bones\Component\Fixture\Mongo;
-
 
 use Bones\Component\Fixture\Mongo\FixtureParser;
 
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testFixtureWithId()
     {
         $fixture = array(
             '_id' => 1,
-            'name' => 'John'
+            'name' => 'John',
         );
 
         $parser = new FixtureParser();
@@ -25,7 +22,6 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
             '\MongoId',
             $parsedFixture['_id']
         );
-
     }
 
     public function testFixtureWithIdAndReference()
@@ -33,7 +29,7 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
         $fixture = array(
             '_id' => 1,
             'name' => 'John',
-            'parentId' => 'ref:1'
+            'parentId' => 'ref:1',
         );
 
         $parser = new FixtureParser();
@@ -51,6 +47,5 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
             '\MongoId',
             $parsedFixture['parentId']
         );
-
     }
 }
