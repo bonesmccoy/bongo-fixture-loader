@@ -1,0 +1,7 @@
+mongo_data_store:
+  host: localhost
+  port: 27017
+  username: ''
+  password: ''
+  db_name: 'test-db'
+  connect: true

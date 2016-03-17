@@ -11,17 +11,14 @@ namespace Bones\Component\Fixture\Mongo;
 
 use Bones\Component\Fixture\Mongo\Matcher\IdentityTransformer;
 use Bones\Component\Fixture\Mongo\Matcher\ReferenceTransformer;
+use Bones\Component\Fixture\Parser\AbstractFixtureParser;
 use Bones\Component\Fixture\Parser\FixtureParserInterface;
 use Bones\Component\Fixture\Parser\TransformerInterface;
 
 
-class FixtureParser implements FixtureParserInterface
+class FixtureParser extends AbstractFixtureParser
 {
 
-    /**
-     * @var TransformerInterface[]
-     */
-    private $transformers = array();
 
     private $timestamp;
 
@@ -35,33 +32,5 @@ class FixtureParser implements FixtureParserInterface
         $this->addTransformer(new ReferenceTransformer($this->timestamp));
     }
 
-    public function parse($fixture) {
 
-        foreach($fixture as $key => $value) {
-            $fixture[$key] = $this->strategy($key, $value);
-        }
-
-        return $fixture;
-    }
-
-
-    private function strategy($key, $value)
-    {
-        /** @var TransformerInterface $matcher */
-        foreach ($this->transformers as $matcher) {
-            if ($matcher->match($key, $value)) {
-                return $matcher->convert($key, $value);
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * @param TransformerInterface $transformer
-     */
-    public function addTransformer(TransformerInterface $transformer)
-    {
-        $this->transformers[] = $transformer;
-    }
 }

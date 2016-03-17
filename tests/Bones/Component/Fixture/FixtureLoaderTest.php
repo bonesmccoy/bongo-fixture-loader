@@ -19,10 +19,10 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoadSingleFixture()
     {
         $fixture = array('collection' => array(
-            array('id' => 1, 'name' => 'fixture 1'),
-            array('id' => 2, 'name' => 'fixture 2'),
-            array('id' => 3, 'name' => 'fixture 3'),
-            array('id' => 4, 'name' => 'fixture 4'),
+            array('_id' => 1, 'name' => 'fixture 1'),
+            array('_id' => 2, 'name' => 'fixture 2'),
+            array('_id' => 3, 'name' => 'fixture 3'),
+            array('_id' => 4, 'name' => 'fixture 4'),
 
             ),
         );
@@ -38,7 +38,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
         foreach ($loadedFixtures as $collectionName => $fixturesInCollection) {
             foreach ($fixturesInCollection as $f) {
                 $this->assertTrue(is_array($f));
-                $this->assertArrayHasKey('id', $f);
+                $this->assertArrayHasKey('_id', $f);
                 $this->assertArrayHasKey('name', $f);
             }
         }
@@ -111,18 +111,18 @@ CFG;
     {
         $fixtureFileContent = <<<YML
 first_collection:
-    - { "id" : 1, "name" : "fixture 1"}
-    - { "id" : 2, "name" : "fixture 2"}
-    - { "id" : 3, "name" : "fixture 3"}
-    - { "id" : 4, "name" : "fixture 4"}
-    - { "id" : 5, "name" : "fixture 5"}
+    - { "_id" : 1, "name" : "fixture 1"}
+    - { "_id" : 2, "name" : "fixture 2"}
+    - { "_id" : 3, "name" : "fixture 3"}
+    - { "_id" : 4, "name" : "fixture 4"}
+    - { "_id" : 5, "name" : "fixture 5"}
 
 second_collection:
-    - { "id" : 1, "name" : "fixture 1"}
-    - { "id" : 2, "name" : "fixture 2"}
-    - { "id" : 3, "name" : "fixture 3"}
-    - { "id" : 4, "name" : "fixture 4"}
-    - { "id" : 5, "name" : "fixture 5"}
+    - { "_id" : 1, "name" : "fixture 1"}
+    - { "_id" : 2, "name" : "fixture 2"}
+    - { "_id" : 3, "name" : "fixture 3"}
+    - { "_id" : 4, "name" : "fixture 4"}
+    - { "_id" : 5, "name" : "fixture 5"}
 YML;
 
         return $fixtureFileContent;

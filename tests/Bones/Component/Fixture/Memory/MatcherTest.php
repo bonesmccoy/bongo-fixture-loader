@@ -4,16 +4,24 @@
 namespace Bones\Component\Fixture\Memory;
 
 
+
+use Bones\Component\Fixture\Memory\Matcher\ReferenceTransformer;
+
 class MatcherTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testIdentityMatcher()
+    public function testSelfReferenceMatcher()
     {
-        $this->markTestIncomplete('to do');
-    }
+        $selfReferenceMatcher = new ReferenceTransformer();
 
-    public function testReferenceMatcher()
-    {
-        $this->markTestIncomplete('to do');
+        $this->assertTrue(
+            $selfReferenceMatcher->match("wathever", "ref:1")
+        );
+
+        $this->assertEquals(
+            1,
+            $selfReferenceMatcher->convert("wathever", "ref:1")
+        );
+
     }
 }

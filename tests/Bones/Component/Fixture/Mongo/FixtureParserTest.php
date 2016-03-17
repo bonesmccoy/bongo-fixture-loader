@@ -5,8 +5,6 @@ namespace tests\Bones\Component\Fixture\Mongo;
 
 
 use Bones\Component\Fixture\Mongo\FixtureParser;
-use Bones\Component\Fixture\Mongo\Matcher\IdentityTransformer;
-use Bones\Component\Fixture\Mongo\Matcher\ReferenceTransformer;
 
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {
