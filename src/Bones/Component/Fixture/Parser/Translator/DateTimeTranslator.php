@@ -26,7 +26,7 @@ class DateTimeTranslator extends AbstractTranslator
         preg_match(static::PATTERN, $value, $matches);
 
         if ($matches > 1) {
-            return new \DateTime($matches[1]);
+            return new \MongoDate(strtotime($matches[1]));
         }
 
         return $value;

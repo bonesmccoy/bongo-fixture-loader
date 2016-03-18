@@ -50,12 +50,12 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            '\DateTime',
+            '\MongoDate',
             $dateTimeTranslator->convert("someField", '<2015-01-01 00:00:00>')
         );
 
         $this->assertInstanceOf(
-            '\DateTime',
+            '\MongoDate',
             $dateTimeTranslator->convert("someField", '<2015-01-01>')
         );
     }
