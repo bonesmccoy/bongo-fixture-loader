@@ -9,7 +9,7 @@ class TransformersTest extends \PHPUnit_Framework_TestCase
 {
     public function testIdentityMatcher()
     {
-        $identityMatcher = new IdentityTransformer(strtotime('now'));
+        $identityMatcher = new IdentityTransformer(strtotime('today'));
         $this->assertTrue(
             $identityMatcher->match('_id', 1)
         );
@@ -22,7 +22,7 @@ class TransformersTest extends \PHPUnit_Framework_TestCase
 
     public function testIdentityUnexpectedData()
     {
-        $identityMatcher = new IdentityTransformer(strtotime('now'));
+        $identityMatcher = new IdentityTransformer(strtotime('today'));
         $this->assertFalse(
             $identityMatcher->match('_id', array('1'))
         );
@@ -54,7 +54,7 @@ class TransformersTest extends \PHPUnit_Framework_TestCase
 
     public function testReferenceBadData()
     {
-        $timestamp = strtotime('now');
+        $timestamp = strtotime('today');
         $selfReferenceMatcher = new ReferenceTransformer($timestamp);
 
         $this->assertFalse(

@@ -42,8 +42,13 @@ class ReferenceTransformer implements TransformerInterface
         preg_match(self::REFERENCE_PATTERN, $value, $matches);
 
         $plainId = $matches[1];
-        $mongoID = Utilities::generateMongoId($this->timestamp, $plainId);
 
-        return $mongoID;
+        try {
+            $mongoId = new \MongoId($plainId);
+        } Catch(\MongoException $e) {
+            $mongoId = Utilities::generateMongoId($this->timestamp, $plainId);
+        }
+
+        return $mongoId;
     }
 }

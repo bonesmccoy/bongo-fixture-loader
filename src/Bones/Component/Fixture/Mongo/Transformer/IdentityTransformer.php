@@ -41,6 +41,12 @@ class IdentityTransformer implements TransformerInterface
             return $value;
         }
 
-        return Utilities::generateMongoId($this->timestamp, $value);
+        try {
+            $id = new \MongoId($value);
+        } Catch(\MongoException $e) {
+            $id = Utilities::generateMongoId($this->timestamp, $value);
+        }
+
+        return $id;
     }
 }
