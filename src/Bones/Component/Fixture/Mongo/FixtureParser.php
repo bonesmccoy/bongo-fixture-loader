@@ -15,7 +15,7 @@ class FixtureParser extends AbstractFixtureParser
      */
     public function __construct()
     {
-        $this->timestamp = strtotime('now');
+        $this->timestamp = strtotime('today');
         $this->addTransformer(new IdentityTransformer($this->timestamp));
         $this->addTransformer(new ReferenceTransformer($this->timestamp));
     }
