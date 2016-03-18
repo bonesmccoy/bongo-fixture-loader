@@ -2,6 +2,7 @@
 
 namespace tests\Bones\Component\Fixture\Mongo;
 
+use Bones\Component\Fixture\Parser\Translator\DateTimeTranslator;
 use Bones\Component\Fixture\Parser\Translator\MongoIdTranslator;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
@@ -29,6 +30,41 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array('1'),
             $identityMatcher->convert('_id', array('1'))
+        );
+    }
+
+    public function testDateTimeTranslator()
+    {
+
+        $dateTimeTranslator = new DateTimeTranslator();
+        $this->assertFalse(
+            $dateTimeTranslator->match("someField", "1")
+        );
+
+        $this->assertTrue(
+            $dateTimeTranslator->match("someField", '<2015-01-01 00:00:00>')
+        );
+
+        $this->assertTrue(
+            $dateTimeTranslator->match("someField", '<2015-01-01>')
+        );
+
+        $this->assertInstanceOf(
+            '\DateTime',
+            $dateTimeTranslator->convert("someField", '<2015-01-01 00:00:00>')
+        );
+
+        $this->assertInstanceOf(
+            '\DateTime',
+            $dateTimeTranslator->convert("someField", '<2015-01-01>')
+        );
+    }
+
+    public function testDateTimeWrong()
+    {
+        $dateTimeTranslator = new DateTimeTranslator();
+        $this->assertFalse(
+            $dateTimeTranslator->match("someField", "2015-1-2 0:00:00")
         );
     }
 }
