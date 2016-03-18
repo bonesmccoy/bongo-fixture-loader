@@ -90,12 +90,18 @@ class FixtureLoader implements LoaderInterface
     }
 
     /**
-     * @param $fixture
+     * @param $fixtures
      */
-    public function addSingleFixture($fixture)
+    public function addSingleFixture($fixtures)
     {
-        $fixture = $this->fixtureParser->parse($fixture);
-        $this->fixtures = array_merge($this->fixtures, $fixture);
+
+        foreach($fixtures as $collection => $fixture) {
+            foreach($fixture as $id => $fixtureRow) {
+                $fixtures[$collection][$id] = $this->fixtureParser->parse($fixtureRow);
+            }
+
+        }
+        $this->fixtures = array_merge($this->fixtures, $fixtures);
     }
 
     /**
