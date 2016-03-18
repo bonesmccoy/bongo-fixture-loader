@@ -12,7 +12,7 @@ interface FixtureParserInterface
     public function parse($fixture);
 
     /**
-     * @param TransformerInterface $transformer
+     * @param TranslatorInterface $transformer
      */
-    public function addTransformer(TransformerInterface $transformer);
+    public function addTransformer(TranslatorInterface $transformer);
 }

@@ -2,10 +2,10 @@
 
 namespace Bones\Component\Fixture\Mongo\Transformer;
 
-use Bones\Component\Fixture\Parser\TransformerInterface;
+use Bones\Component\Fixture\Parser\TranslatorInterface;
 use Bones\Component\Mongo\Utilities;
 
-class IdentityTransformer implements TransformerInterface
+class ReferenceTranslator implements TranslatorInterface
 {
     private $timestamp;
 
@@ -26,27 +26,29 @@ class IdentityTransformer implements TransformerInterface
             return false;
         }
 
-        return $key === self::IDENTITY_PATTERN;
+        $matches = array();
+        preg_match(self::REFERENCE_PATTERN, $value, $matches);
+
+        return count($matches) > 1;
     }
 
-    /**
-     * @param $key
-     * @param $value
-     *
-     * @return \MongoId
-     */
     public function convert($key, $value)
     {
         if (is_array($value)) {
             return $value;
         }
 
+        $matches = array();
+        preg_match(self::REFERENCE_PATTERN, $value, $matches);
+
+        $plainId = $matches[1];
+
         try {
-            $id = new \MongoId($value);
+            $mongoId = new \MongoId($plainId);
         } Catch(\MongoException $e) {
-            $id = Utilities::generateMongoId($this->timestamp, $value);
+            $mongoId = Utilities::generateMongoId($this->timestamp, $plainId);
         }
 
-        return $id;
+        return $mongoId;
     }
 }

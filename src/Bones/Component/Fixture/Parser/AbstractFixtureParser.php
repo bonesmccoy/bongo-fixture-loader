@@ -5,7 +5,7 @@ namespace Bones\Component\Fixture\Parser;
 abstract class AbstractFixtureParser implements FixtureParserInterface
 {
     /**
-     * @var TransformerInterface[]
+     * @var TranslatorInterface[]
      */
     protected $transformers;
 
@@ -20,7 +20,7 @@ abstract class AbstractFixtureParser implements FixtureParserInterface
 
     private function strategy($key, $value)
     {
-        /** @var TransformerInterface $matcher */
+        /** @var TranslatorInterface $matcher */
         foreach ($this->transformers as $matcher) {
             if ($matcher->match($key, $value)) {
                 return $matcher->convert($key, $value);
@@ -31,9 +31,9 @@ abstract class AbstractFixtureParser implements FixtureParserInterface
     }
 
     /**
-     * @param TransformerInterface $transformer
+     * @param TranslatorInterface $transformer
      */
-    public function addTransformer(TransformerInterface $transformer)
+    public function addTransformer(TranslatorInterface $transformer)
     {
         $this->transformers[] = $transformer;
     }

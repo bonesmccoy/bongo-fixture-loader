@@ -2,13 +2,13 @@
 
 namespace Bones\Component\Fixture\Memory;
 
-use Bones\Component\Fixture\Memory\Transformer\ReferenceTransformer;
 use Bones\Component\Fixture\Parser\AbstractFixtureParser;
+use Bones\Component\Fixture\Parser\Translator\MongoIdTranslator;
 
 class FixtureParser extends AbstractFixtureParser
 {
     public function __construct()
     {
-        $this->addTransformer(new ReferenceTransformer());
+        $this->addTransformer(new MongoIdTranslator());
     }
 }
