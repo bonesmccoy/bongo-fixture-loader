@@ -2,14 +2,16 @@
 
 namespace tests\Bones\Component\Fixture\Mongo;
 
-use Bones\Component\Fixture\Mongo\FixtureParser;
+
+
+use Bones\Component\Fixture\Parser\FixtureParser;
 
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testFixtureWithId()
     {
         $fixture = array(
-            '_id' => 1,
+            '_id' => '<id@56eb45003639330941000013>',
             'name' => 'John',
         );
 
@@ -27,9 +29,9 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
     public function testFixtureWithIdAndReference()
     {
         $fixture = array(
-            '_id' => 1,
+            '_id' => '<id@56eb45003639330941000013>',
             'name' => 'John',
-            'parentId' => 'ref:1',
+            'parentId' => '<id@56eb45003639330941000014>',
         );
 
         $parser = new FixtureParser();

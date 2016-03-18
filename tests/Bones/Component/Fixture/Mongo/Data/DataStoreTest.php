@@ -3,7 +3,7 @@
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
-use Bones\Component\Fixture\Mongo\FixtureParser;
+use Bones\Component\Fixture\Parser\FixtureParser;
 use Bones\Component\Mongo\Connection;
 
 class DataStoreTest extends \PHPUnit_Framework_TestCase
@@ -57,9 +57,9 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
     public function testPersist()
     {
         $fixture = array(
-            '_id' => '56eb45003639330941000001',
+            '_id' => '<id@56eb45003639330941000001>',
             'name' => 'ted',
-            'referencedId' => 'ref:56eb45003639330941000001',
+            'referencedId' => '<id@56eb45003639330941000001>',
         );
 
         $fixtureParser = new FixtureParser();
