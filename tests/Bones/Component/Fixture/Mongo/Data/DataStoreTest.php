@@ -57,9 +57,9 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
     public function testPersist()
     {
         $fixture = array(
-            '_id' => '56eb45003639330941000001',
+            '_id' => '<id@56eb45003639330941000001>',
             'name' => 'ted',
-            'referencedId' => 'ref:56eb45003639330941000001',
+            'referencedId' => '<id@56eb45003639330941000001>',
         );
 
         $fixtureParser = new FixtureParser();
