@@ -46,18 +46,28 @@ Create one or more fixtures in the configured path:
         - object 2
         - object 3
 
+Special Field Syntax
 
-Example of a message collection:
+- to get an ObjectId (or MongoId in PHP)
+
+.. code-block:: yaml
+
+    "_id" : "<id@{24 CHARS HEX STRING}>
+
+- to get a DateTime object
+
+.. code-block:: yaml
+
+    "dateTimeField" : "<YYYY-MM-DD HH:mm:SS>"
+    "dateField": "<YYYY-MM-DD>"
+
+Example of a list of forum post:
 
 .. code-block:: yaml
 
     messages:
-        - {"_id" : 1, "conversation" : 1, "sender" : 1, "recipient" : [ {"id" : 2 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
-        - {"_id" : 2, "conversation" : 1, "sender" : 2, "recipient" : [ {"id" : 1 }, {"id": 3 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
-        - {"_id" : 3, "conversation" : 1, "sender" : 3, "recipient" : [ {"id" : 2 }, {"id": 1 }, {"id": 4} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
-        - {"_id" : 4, "conversation" : 1, "sender" : 4, "recipient" : [ {"id" : 2 }, {"id": 3 }, {"id": 1} ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
-        - {"_id" : 5, "conversation" : 2, "sender" : 3, "recipient" : [ {"id" : 2 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
-        - {"_id" : 6, "conversation" : 2, "sender" : 2, "recipient" : [ {"id" : 1 } ], 'title' : 'title', 'body' : 'body', 'date' : '2016-03-04 12:00:00' }
+        - {"_id" : "<id@56eb45003639330941000001>", "parentId" : "<id@56eb45003639330941000001>", "senderId" : 1, 'title' : 'title  1', 'body' : 'body content 1', 'date' : '<2016-03-04 12:00:00>' }
+        - {"_id" : "<id@56eb45003639330941000002>", "parentId" : "<id@56eb45003639330941000001>", "senderId" : 2, 'title' : 'title', 'body' : 'body content 2', 'date' : '<2016-03-04 12:00:00>' }
 
 
 Usage
