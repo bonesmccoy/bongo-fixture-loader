@@ -61,14 +61,26 @@ Special Field Syntax
     "dateTimeField" : "<YYYY-MM-DD HH:mm:SS>"
     "dateField": "<YYYY-MM-DD>"
 
-Example of a list of forum post:
+Example of a list of forum post, where the first is the parent of the second:
 
 .. code-block:: yaml
 
-    messages:
+    posts:
         - {"_id" : "<id@56eb45003639330941000001>", "parentId" : "<id@56eb45003639330941000001>", "senderId" : 1, 'title' : 'title  1', 'body' : 'body content 1', 'date' : '<2016-03-04 12:00:00>' }
         - {"_id" : "<id@56eb45003639330941000002>", "parentId" : "<id@56eb45003639330941000001>", "senderId" : 2, 'title' : 'title', 'body' : 'body content 2', 'date' : '<2016-03-04 12:00:00>' }
 
+will be saved as :
+
+.. code-block:: json
+
+    { 
+        "_id" : ObjectId('56eb45003639330941000001'),
+        "parentId: ObjectId('56eb45003639330941000001'),
+        "senderId": 1,
+        ...
+        ...
+        "date" : ISODate('2016-03-04 12:00:00')
+    
 
 Usage
 -----
