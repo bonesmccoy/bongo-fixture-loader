@@ -38,7 +38,7 @@ class FixtureLoader implements LoaderInterface
      * @param DataStoreInterface $dataStoreWriter
      * @param FixtureParserInterface $fixtureParser
      */
-    private function __construct(DataStoreInterface $dataStoreWriter, FixtureParserInterface $fixtureParser)
+    public function __construct(DataStoreInterface $dataStoreWriter, FixtureParserInterface $fixtureParser)
     {
         $this->yamlParser = new Yaml();
         $this->dataStoreWriter = $dataStoreWriter;
@@ -98,9 +98,7 @@ class FixtureLoader implements LoaderInterface
             foreach($fixture as $id => $fixtureRow) {
                 $fixtures[$collection][$id] = $this->fixtureParser->parse($fixtureRow);
             }
-
         }
-        
         $this->fixtures = array_merge($this->fixtures, $fixtures);
     }
 
