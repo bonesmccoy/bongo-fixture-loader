@@ -4,7 +4,7 @@ namespace Bones\Component\Fixture\Parser;
 
 interface TransformerInterface
 {
-    const REFERENCE_PATTERN = '/^ref:([0-9])+$/';
+    const REFERENCE_PATTERN = '/^ref:([0-9A-fa-f]+)$/';
     const IDENTITY_PATTERN = '_id';
 
     /**

@@ -66,4 +66,23 @@ class TransformersTest extends \PHPUnit_Framework_TestCase
             $selfReferenceMatcher->convert('wathever', array('2'))
         );
     }
+
+    public function testReferenceWithMongoId()
+    {
+        $timestamp = strtotime('now');
+        $identityMatcher = new IdentityTransformer($timestamp);
+
+        $objectId = $identityMatcher->convert('_id', '56eb45003639330941000001');
+
+        $selfReferenceMatcher = new ReferenceTransformer($timestamp);
+
+        $this->assertTrue(
+            $selfReferenceMatcher->match('wathever', 'ref:56eb45003639330941000001')
+        );
+
+        $this->assertEquals(
+            $objectId,
+            $selfReferenceMatcher->convert('wathever', 'ref:56eb45003639330941000001')
+        );
+    }
 }
