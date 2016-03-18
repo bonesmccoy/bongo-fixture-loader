@@ -6,6 +6,7 @@ use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
 use Bones\Component\Fixture\Memory\FixtureParser as InMemoryFixtureParser;
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
 use Bones\Component\Fixture\Mongo\FixtureParser as MongoFixtureParser;
+use Bones\Component\Fixture\Parser\FixtureParserInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class FixtureLoader implements LoaderInterface
@@ -13,7 +14,7 @@ class FixtureLoader implements LoaderInterface
     const LOADER_MONGO = 'mongo';
     const LOADER_MEMORY = 'memory';
 
-    protected $parser;
+    protected $yamlParser;
 
     /**
      * @var array
@@ -27,15 +28,26 @@ class FixtureLoader implements LoaderInterface
      */
     protected $dataStoreWriter;
 
-    private function __construct(DataStoreInterface $dataStoreWriter)
+    /**
+     * @var FixtureParserInterface
+     */
+    private $fixtureParser;
+
+    /**
+     * FixtureLoader constructor.
+     * @param DataStoreInterface $dataStoreWriter
+     * @param FixtureParserInterface $fixtureParser
+     */
+    private function __construct(DataStoreInterface $dataStoreWriter, FixtureParserInterface $fixtureParser)
     {
-        $this->parser = new Yaml();
+        $this->yamlParser = new Yaml();
         $this->dataStoreWriter = $dataStoreWriter;
+        $this->fixtureParser = $fixtureParser;
     }
 
     public function addFixturesFromConfiguration($fixtureConfigurationFile, $applicationRoot = '')
     {
-        $config = $this->parser->parse(file_get_contents($fixtureConfigurationFile));
+        $config = $this->yamlParser->parse(file_get_contents($fixtureConfigurationFile));
 
         if (!isset($config['fixtures']['paths'])) {
             throw new \InvalidArgumentException(
@@ -73,7 +85,7 @@ class FixtureLoader implements LoaderInterface
      */
     public function addFixturesFromFile($fixtureFile)
     {
-        $fixture = $this->parser->parse(file_get_contents($fixtureFile));
+        $fixture = $this->yamlParser->parse(file_get_contents($fixtureFile));
         $this->addSingleFixture($fixture);
     }
 
@@ -82,6 +94,7 @@ class FixtureLoader implements LoaderInterface
      */
     public function addSingleFixture($fixture)
     {
+        $fixture = $this->fixtureParser->parse($fixture);
         $this->fixtures = array_merge($this->fixtures, $fixture);
     }
 
@@ -126,11 +139,10 @@ class FixtureLoader implements LoaderInterface
     public static function factoryMongoFixtureLoader($configFile)
     {
         $dataStore = new MongoDataStore(
-            Yaml::parse(file_get_contents($configFile)),
-            new MongoFixtureParser()
+            Yaml::parse(file_get_contents($configFile))
         );
 
-        return new self($dataStore);
+        return new self($dataStore, new MongoFixtureParser());
     }
 
     /**
@@ -138,8 +150,8 @@ class FixtureLoader implements LoaderInterface
      */
     public static function factoryInMemoryFixtureLoader()
     {
-        $dataStore = new InMemoryDataStore(new InMemoryFixtureParser());
+        $dataStore = new InMemoryDataStore();
 
-        return new self($dataStore);
+        return new self($dataStore, new InMemoryFixtureParser());
     }
 }

@@ -57,10 +57,13 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
     public function testPersist()
     {
         $fixture = array(
-            '_id' => 1,
+            '_id' => '56eb45003639330941000001',
             'name' => 'ted',
-            'referencedId' => 'ref:1',
+            'referencedId' => 'ref:56eb45003639330941000001',
         );
+
+        $fixtureParser = new FixtureParser();
+        $fixture = $fixtureParser->parse($fixture);
 
         $collection = $this->collection;
         $databaseName = $this->connection->getDatabaseName();
