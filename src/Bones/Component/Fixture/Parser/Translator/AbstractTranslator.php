@@ -21,7 +21,7 @@ abstract class AbstractTranslator implements TranslatorInterface
         }
 
         $matches = array();
-        preg_match(self::PATTERN, $value, $matches);
+        preg_match(static::PATTERN, $value, $matches);
 
         return count($matches) > 1;
     }
@@ -33,5 +33,7 @@ abstract class AbstractTranslator implements TranslatorInterface
     protected function isValid($value)
     {
         if (is_array($value)) { return false; }
+
+        return true;
     }
 }

@@ -3,7 +3,7 @@
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
-use Bones\Component\Fixture\Mongo\FixtureParser;
+use Bones\Component\Fixture\Parser\FixtureParser;
 use Bones\Component\Mongo\Connection;
 
 class DataStoreTest extends \PHPUnit_Framework_TestCase

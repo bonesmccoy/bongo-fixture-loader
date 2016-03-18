@@ -14,7 +14,7 @@ use Bones\Component\Mongo\Utilities;
 
 class MongoIdTranslator extends AbstractTranslator
 {
-    const PATTERN = '/^<id@([]{,12})>$/';
+    const PATTERN = '/^<id@([0-9A-fa-f]{24})>$/i';
 
 
     /**
@@ -25,6 +25,10 @@ class MongoIdTranslator extends AbstractTranslator
      */
     public function convert($key, $value)
     {
+        if (!$this->isValid($value)) {
+            return $value;
+        }
+
         $matches = array();
         preg_match(self::PATTERN, $value, $matches);
 

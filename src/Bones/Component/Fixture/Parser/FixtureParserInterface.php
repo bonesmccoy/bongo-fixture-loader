@@ -2,6 +2,8 @@
 
 namespace Bones\Component\Fixture\Parser;
 
+use Bones\Component\Fixture\Parser\Translator\TranslatorInterface;
+
 interface FixtureParserInterface
 {
     /**
@@ -14,5 +16,5 @@ interface FixtureParserInterface
     /**
      * @param TranslatorInterface $transformer
      */
-    public function addTransformer(TranslatorInterface $transformer);
+    public function addTranslator(TranslatorInterface $transformer);
 }

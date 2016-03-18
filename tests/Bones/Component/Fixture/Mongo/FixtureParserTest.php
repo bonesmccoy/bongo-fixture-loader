@@ -2,7 +2,9 @@
 
 namespace tests\Bones\Component\Fixture\Mongo;
 
-use Bones\Component\Fixture\Mongo\FixtureParser;
+
+
+use Bones\Component\Fixture\Parser\FixtureParser;
 
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {

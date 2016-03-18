@@ -1,6 +1,6 @@
 <?php
 
-namespace Bones\Component\Fixture\Mongo;
+namespace Bones\Component\Fixture\Parser;
 
 use Bones\Component\Fixture\Mongo\Transformer\IdentityTranslator;
 use Bones\Component\Fixture\Mongo\Transformer\ReferenceTranslator;
@@ -15,6 +15,6 @@ class FixtureParser extends AbstractFixtureParser
      */
     public function __construct()
     {
-        $this->addTransformer(new MongoIdTranslator());
+        $this->addTranslator(new MongoIdTranslator());
     }
 }
