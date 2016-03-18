@@ -86,21 +86,21 @@ class FixtureLoader implements LoaderInterface
     public function addFixturesFromFile($fixtureFile)
     {
         $fixture = $this->yamlParser->parse(file_get_contents($fixtureFile));
-        $this->addSingleFixture($fixture);
+        $this->addFixturesWithCollection($fixture);
     }
 
     /**
      * @param $fixtures
      */
-    public function addSingleFixture($fixtures)
+    public function addFixturesWithCollection($fixtures)
     {
-
         foreach($fixtures as $collection => $fixture) {
             foreach($fixture as $id => $fixtureRow) {
                 $fixtures[$collection][$id] = $this->fixtureParser->parse($fixtureRow);
             }
 
         }
+        
         $this->fixtures = array_merge($this->fixtures, $fixtures);
     }
 

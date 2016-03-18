@@ -19,7 +19,7 @@ class TestBinaryFile extends \PHPUnit_Framework_TestCase
             __DIR__.'config.yml'
         );
 
-        $loader->addSingleFixture(
+        $loader->addFixturesWithCollection(
             array('collection' => array('_id' => 1, 'name' => 'brian'),
             )
         );

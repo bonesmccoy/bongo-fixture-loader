@@ -27,7 +27,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->loader->addSingleFixture($fixture);
+        $this->loader->addFixturesWithCollection($fixture);
         $loadedFixtures = $this->loader->getLoadedFixtures();
         $this->assertCount(
             1,
