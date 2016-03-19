@@ -3,7 +3,7 @@
 namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
-use Bones\Component\Fixture\Parser\FixtureParser;
+use Bones\Component\Fixture\Parser\FixtureTransformer;
 use Bones\Component\Mongo\Connection;
 
 class DataStoreTest extends \PHPUnit_Framework_TestCase
@@ -44,7 +44,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
         $this->connection = Connection::createFromConfiguration($mongoConfig);
         $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
         $this->collection = 'collection-test';
-        $this->dataStore = new MongoDataStore($mongoDataStore, new FixtureParser());
+        $this->dataStore = new MongoDataStore($mongoDataStore, new FixtureTransformer());
 
         $this->dataStore->emptyDataStore($this->collection);
     }
@@ -62,7 +62,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
             'referencedId' => '<id@56eb45003639330941000001>',
         );
 
-        $fixtureParser = new FixtureParser();
+        $fixtureParser = new FixtureTransformer();
         $fixture = $fixtureParser->parse($fixture);
 
         $collection = $this->collection;

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Bones\Component\Fixture\Parser\Translator;
+namespace Bones\Component\Fixture\Parser\Transformer;
 
 
-class DateTimeTranslator extends AbstractTranslator
+class DateTimeTransformer extends AbstractTransformer
 {
 
     const PATTERN = '/<(\d{4}\-\d{2}\-\d{2}( \d{2}:\d{2}:\d{2})?)>$/';

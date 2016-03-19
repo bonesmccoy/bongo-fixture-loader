@@ -1,18 +1,18 @@
 <?php
 
-namespace Bones\Component\Fixture\Parser\Translator;
+namespace Bones\Component\Fixture\Parser\Transformer;
 
-use Bones\Component\Fixture\Parser\TranslatorInterface;
+use Bones\Component\Fixture\Parser\TransformerInterface;
 use Bones\Component\Mongo\Utilities;
 
 /**
  * parse fixture value with structure <id@{hexMongoId}> and creates a MongoId
  *
  * Class IdTranslator
- * @package Bones\Component\Fixture\Parser\Translator
+ * @package Bones\Component\Fixture\Parser\Transformer
  */
 
-class MongoIdTranslator extends AbstractTranslator
+class MongoIdTransformer extends AbstractTransformer
 {
     const PATTERN = '/^<id@([0-9A-fa-f]{24})>$/i';
 

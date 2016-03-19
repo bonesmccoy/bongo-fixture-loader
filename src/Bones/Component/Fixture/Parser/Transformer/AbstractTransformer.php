@@ -1,9 +1,9 @@
 <?php
 
-namespace Bones\Component\Fixture\Parser\Translator;
+namespace Bones\Component\Fixture\Parser\Transformer;
 
 
-abstract class AbstractTranslator implements TranslatorInterface
+abstract class AbstractTransformer implements TransformerInterface
 {
 
     const PATTERN = '';

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bones\Component\Fixture\Parser\Translator;
+namespace Bones\Component\Fixture\Parser\Transformer;
 
-interface TranslatorInterface
+interface TransformerInterface
 {
     const REFERENCE_PATTERN = '/^ref:([0-9A-fa-f]+)$/';
     const IDENTITY_PATTERN = '_id';

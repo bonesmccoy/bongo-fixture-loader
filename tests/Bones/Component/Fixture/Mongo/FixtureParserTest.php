@@ -4,7 +4,7 @@ namespace tests\Bones\Component\Fixture\Mongo;
 
 
 
-use Bones\Component\Fixture\Parser\FixtureParser;
+use Bones\Component\Fixture\Parser\FixtureTransformer;
 
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
             'name' => 'John',
         );
 
-        $parser = new FixtureParser();
+        $parser = new FixtureTransformer();
 
         $parsedFixture = $parser->parse($fixture);
 
@@ -34,7 +34,7 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
             'parentId' => '<id@56eb45003639330941000014>',
         );
 
-        $parser = new FixtureParser();
+        $parser = new FixtureTransformer();
 
         $parsedFixture = $parser->parse($fixture);
 
