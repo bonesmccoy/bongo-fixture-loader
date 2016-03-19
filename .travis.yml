@@ -1,6 +1,6 @@
 language: php
 php:
-  - 5.4
+  - 5.5
   - 5.6
 
 env:
@@ -12,7 +12,7 @@ services:
 before_script:
   - mkdir -p tmp
   - phpenv config-add config.travis.ini
-  - composer update
+  - composer install
   - mkdir -p build/logs
 
 script:
