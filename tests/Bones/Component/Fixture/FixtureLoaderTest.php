@@ -16,6 +16,8 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
         $this->loader = FixtureLoader::factoryInMemoryFixtureLoader();
     }
 
+
+
     public function testLoadSingleFixture()
     {
         $fixture = array('collection' => array(
@@ -42,6 +44,25 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
                 $this->assertArrayHasKey('name', $f);
             }
         }
+    }
+
+    public function testLoadFixtureAndUnload()
+    {
+        $fixture = array('collection' => array(
+            array('_id' => 1, 'name' => 'fixture 1'),
+            array('_id' => 2, 'name' => 'fixture 2'),
+            array('_id' => 3, 'name' => 'fixture 3'),
+            array('_id' => 4, 'name' => 'fixture 4'),
+
+        ),
+        );
+
+        $this->loader->addFixturesWithCollection($fixture);
+        $this->loader->resetLoadedFixtures();
+        $this->assertCount(
+            0,
+            $this->loader->getLoadedFixtures()
+        );
     }
 
     public function testAddFixturesFromFile()
@@ -152,6 +173,31 @@ YML;
         fclose($fh);
 
         return $fixtureFilePath;
+    }
+
+    public function testLoaderFromConfiguration()
+    {
+        $loader = FixtureLoader::factoryMongoFixtureLoader(
+            __DIR__ . '/test-config.yml'
+        );
+
+        
+    }
+
+    public function testLoaderFromConfigurationAndAddFixture()
+    {
+        $loader = FixtureLoader::factoryMongoFixtureLoader(
+            __DIR__ . '/test-config.yml'
+        );
+
+        $loader->addFixturesWithCollection(
+            array('collection' => array(array('_id' => 1, 'name' => 'brian')),
+            )
+        );
+
+        $loader->persistLoadedFixtures();
+
+
     }
 
     /**
