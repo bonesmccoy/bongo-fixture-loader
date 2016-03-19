@@ -37,14 +37,14 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
             'connect' => true,
         );
 
-        $mongoDataStore = array(
+        $mongoDataStoreConfiguration = array(
             'mongo_data_store' => $mongoConfig,
         );
 
         $this->connection = Connection::createFromConfiguration($mongoConfig);
         $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
         $this->collection = 'collection-test';
-        $this->dataStore = new MongoDataStore($mongoDataStore, new FixtureTransformer());
+        $this->dataStore = new MongoDataStore($mongoDataStoreConfiguration, new FixtureTransformer());
 
         $this->dataStore->emptyDataStore($this->collection);
     }
