@@ -25,7 +25,7 @@ class DateTimeTransformer extends AbstractTransformer
         $matches = array();
         preg_match(static::PATTERN, $value, $matches);
 
-        if ($matches > 1) {
+        if (count($matches) > 1) {
             return new \MongoDate(strtotime($matches[1]));
         }
 

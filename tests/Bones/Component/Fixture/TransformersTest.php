@@ -5,7 +5,7 @@ namespace tests\Bones\Component\Fixture\Mongo;
 use Bones\Component\Fixture\Parser\Transformer\DateTimeTransformer;
 use Bones\Component\Fixture\Parser\Transformer\MongoIdTransformer;
 
-class TranslatorTest extends \PHPUnit_Framework_TestCase
+class TransformersTest extends \PHPUnit_Framework_TestCase
 {
     public function testIdTranslator()
     {
@@ -65,6 +65,12 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $dateTimeTranslator = new DateTimeTransformer();
         $this->assertFalse(
             $dateTimeTranslator->match("someField", "2015-1-2 0:00:00")
+        );
+
+        $dateTimeTranslator = new DateTimeTransformer();
+        $this->assertEquals(
+            '2015-1-2 0:00:00',
+            $dateTimeTranslator->convert("someField", "2015-1-2 0:00:00")
         );
     }
 }
