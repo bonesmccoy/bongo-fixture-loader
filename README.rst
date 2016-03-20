@@ -3,8 +3,10 @@ Bongo Fixture Loader
 
 .. image:: https://travis-ci.org/bonesmccoy/bongo-fixture-loader.svg?branch=master
     :target: https://travis-ci.org/bonesmccoy/bongo-fixture-loader
+    
 
-.. image:: https://coveralls.io/repos/github/bonesmccoy/bongo-fixture-loader/badge.svg?branch=develop :target: https://coveralls.io/github/bonesmccoy/bongo-fixture-loader?branch=develop
+.. image:: https://coveralls.io/repos/github/bonesmccoy/bongo-fixture-loader/badge.svg?branch=develop 
+     :target: https://coveralls.io/github/bonesmccoy/bongo-fixture-loader?branch=develop
 
 Bon(es)(mon)go fixture loader for mongodb.
 
