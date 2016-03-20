@@ -3,6 +3,7 @@
 namespace Bones\Component\Fixture\Memory\Data;
 
 use Bones\Component\Fixture\DataStoreInterface;
+use Bones\Component\Fixture\Parser\FixtureTransformerIntreface;
 
 class InMemoryDataStore implements DataStoreInterface
 {
@@ -26,10 +27,12 @@ class InMemoryDataStore implements DataStoreInterface
     }
 
     /**
-     * @return array
+     * @param $collection
+     * @return array|mixed
      */
-    public function getData()
+    public function fetchCollection($collection)
     {
-        return $this->data;
+        return  (isset($this->data[$collection])) ? $this->data[$collection] : array();
     }
+
 }

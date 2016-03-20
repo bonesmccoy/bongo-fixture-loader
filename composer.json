@@ -1,13 +1,21 @@
 {
     "name": "bonesmccoy/bongo-fixture-loader",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:bonesmccoy/bones-component-mongo.git"
+        }
+    ],
     "require": {
         "php" : ">5.4",
         "ext-mongo" : "*",
-        "symfony/yaml" : "*"
+        "symfony/yaml" : "*",
+        "bonesmccoy/bones-component-mongo" : "dev-master"
     },
     "bin": ["bin/bongo-load"],
     "require-dev": {
-        "phpunit/phpunit" : "4.8.*"
+        "phpunit/phpunit" : "4.8.*",
+        "satooshi/php-coveralls": "dev-master"
     },
     "config": {
         "bin-dir": "bin"

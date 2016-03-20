@@ -7,7 +7,7 @@ interface LoaderInterface
     /**
      * @param $fixture
      */
-    public function addSingleFixture($fixture);
+    public function addFixturesWithCollection($fixture);
 
     /**
      * @param $fixtureFile
@@ -23,5 +23,5 @@ interface LoaderInterface
 
     public function persistLoadedFixtures();
 
-    public function dumpMessages();
+    public function getMessagesAsString();
 }

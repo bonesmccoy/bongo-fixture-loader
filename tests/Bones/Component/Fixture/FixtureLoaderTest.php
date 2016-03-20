@@ -3,32 +3,54 @@
 namespace tests\Bones\Component\Fixture;
 
 use Bones\Component\Fixture\FixtureLoader;
+use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
+use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
+use Bones\Component\Fixture\Parser\FixtureTransformer;
+use Bones\Component\Mongo\Connection;
+use Symfony\Component\Yaml\Yaml;
 
 class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FixtureLoader
      */
-    protected $loader;
+    protected $inMemoryFixtureLoader;
+    /**
+     * @var FixtureLoader
+     */
+    protected $mongoFixtureLoader;
+    protected $connection;
+    protected $client;
+    protected $mongoDataStore;
+    protected $mongoConfig;
 
     public function setUp()
     {
-        $this->loader = FixtureLoader::factoryInMemoryFixtureLoader();
+        $this->inMemoryFixtureLoader = FixtureLoader::factoryInMemoryFixtureLoader();
+
+        $this->mongoConfig = Yaml::parse(file_get_contents(__DIR__ . "/test-config.yml" ));
+
+        $this->getMongoClient();
+
+        $this->mongoDataStore = new MongoDataStore($this->mongoConfig);
+
+        $this->mongoFixtureLoader = new FixtureLoader($this->mongoDataStore, new FixtureTransformer());
+
     }
 
     public function testLoadSingleFixture()
     {
         $fixture = array('collection' => array(
-            array('id' => 1, 'name' => 'fixture 1'),
-            array('id' => 2, 'name' => 'fixture 2'),
-            array('id' => 3, 'name' => 'fixture 3'),
-            array('id' => 4, 'name' => 'fixture 4'),
+            array('_id' => 1, 'name' => 'fixture 1'),
+            array('_id' => 2, 'name' => 'fixture 2'),
+            array('_id' => 3, 'name' => 'fixture 3'),
+            array('_id' => 4, 'name' => 'fixture 4'),
 
             ),
         );
 
-        $this->loader->addSingleFixture($fixture);
-        $loadedFixtures = $this->loader->getLoadedFixtures();
+        $this->inMemoryFixtureLoader->addFixturesWithCollection($fixture);
+        $loadedFixtures = $this->inMemoryFixtureLoader->getLoadedFixtures();
         $this->assertCount(
             1,
             $loadedFixtures
@@ -38,10 +60,29 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
         foreach ($loadedFixtures as $collectionName => $fixturesInCollection) {
             foreach ($fixturesInCollection as $f) {
                 $this->assertTrue(is_array($f));
-                $this->assertArrayHasKey('id', $f);
+                $this->assertArrayHasKey('_id', $f);
                 $this->assertArrayHasKey('name', $f);
             }
         }
+    }
+
+    public function testLoadFixtureAndUnload()
+    {
+        $fixture = array('collection' => array(
+            array('_id' => 1, 'name' => 'fixture 1'),
+            array('_id' => 2, 'name' => 'fixture 2'),
+            array('_id' => 3, 'name' => 'fixture 3'),
+            array('_id' => 4, 'name' => 'fixture 4'),
+
+            ),
+        );
+
+        $this->inMemoryFixtureLoader->addFixturesWithCollection($fixture);
+        $this->inMemoryFixtureLoader->resetLoadedFixtures();
+        $this->assertCount(
+            0,
+            $this->inMemoryFixtureLoader->getLoadedFixtures()
+        );
     }
 
     public function testAddFixturesFromFile()
@@ -49,9 +90,9 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
         $fixtureFileContent = $this->getFixtureFileContent();
         $fixtureFilePath = $this->createYmlFile('fixtures', $fixtureFileContent);
 
-        $this->loader->addFixturesFromFile($fixtureFilePath);
+        $this->inMemoryFixtureLoader->addFixturesFromFile($fixtureFilePath);
 
-        $loadedFixtures = $this->loader->getLoadedFixtures();
+        $loadedFixtures = $this->inMemoryFixtureLoader->getLoadedFixtures();
         $this->assertCount(
             2,
             $loadedFixtures
@@ -65,9 +106,9 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->createYmlFile('fixtures', $this->getFixtureFileContent());
 
-        $this->loader->addFixturesFromDirectory($this->getTemporaryDirectory().'/fixtures');
+        $this->inMemoryFixtureLoader->addFixturesFromDirectory($this->getTemporaryDirectory().'/fixtures');
 
-        $loadedFixtures = $this->loader->getLoadedFixtures();
+        $loadedFixtures = $this->inMemoryFixtureLoader->getLoadedFixtures();
         $this->assertCount(
             2,
             $loadedFixtures
@@ -92,16 +133,68 @@ CFG;
 
         $configFile = $this->createYmlFile('config', $configYmlContent);
 
-        $this->loader->addFixturesFromConfiguration($configFile);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
 
-        $loadedFixtures = $this->loader->getLoadedFixtures();
+        $loadedFixtures = $this->inMemoryFixtureLoader->getLoadedFixtures();
         $this->assertCount(
             2,
             $loadedFixtures
         );
-
         $this->assertArrayHasKey('first_collection', $loadedFixtures);
         $this->assertArrayHasKey('second_collection', $loadedFixtures);
+
+        $this->inMemoryFixtureLoader->persistLoadedFixtures();
+
+        $messageString = $this->inMemoryFixtureLoader->getMessagesAsString();
+
+        $this->assertTrue(
+            is_string($messageString)
+        );
+
+        $messages = explode(PHP_EOL, $messageString);
+        $this->assertCount(2, $messages);
+
+        $this->assertEquals(
+            'Adding 5 fixture to the collection first_collection',
+            $messages[0]
+        );
+        $this->assertEquals(
+            'Adding 5 fixture to the collection second_collection',
+            $messages[1]
+        );
+
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testLoadingWrongConfigurationFile()
+    {
+        $this->createYmlFile('fixtures', $this->getFixtureFileContent());
+
+        $configYmlContent = <<<CFG
+fixtures:
+
+CFG;
+
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
+
+        $configYmlContent = "";
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
+
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testLoadingEmptyConfiguratonFile()
+    {
+        $configYmlContent = "";
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
     }
 
     /**
@@ -111,18 +204,18 @@ CFG;
     {
         $fixtureFileContent = <<<YML
 first_collection:
-    - { "id" : 1, "name" : "fixture 1"}
-    - { "id" : 2, "name" : "fixture 2"}
-    - { "id" : 3, "name" : "fixture 3"}
-    - { "id" : 4, "name" : "fixture 4"}
-    - { "id" : 5, "name" : "fixture 5"}
+    - { "_id" : 1, "name" : "fixture 1"}
+    - { "_id" : 2, "name" : "fixture 2"}
+    - { "_id" : 3, "name" : "fixture 3"}
+    - { "_id" : 4, "name" : "fixture 4"}
+    - { "_id" : 5, "name" : "fixture 5"}
 
 second_collection:
-    - { "id" : 1, "name" : "fixture 1"}
-    - { "id" : 2, "name" : "fixture 2"}
-    - { "id" : 3, "name" : "fixture 3"}
-    - { "id" : 4, "name" : "fixture 4"}
-    - { "id" : 5, "name" : "fixture 5"}
+    - { "_id" : 1, "name" : "fixture 1"}
+    - { "_id" : 2, "name" : "fixture 2"}
+    - { "_id" : 3, "name" : "fixture 3"}
+    - { "_id" : 4, "name" : "fixture 4"}
+    - { "_id" : 5, "name" : "fixture 5"}
 YML;
 
         return $fixtureFileContent;
@@ -154,6 +247,31 @@ YML;
         return $fixtureFilePath;
     }
 
+    public function testLoaderFromConfiguration()
+    {
+        $loader = FixtureLoader::factoryMongoFixtureLoader(
+            __DIR__ . '/test-config.yml'
+        );
+
+
+    }
+
+    public function testLoaderFromConfigurationAndAddFixture()
+    {
+        $loader = FixtureLoader::factoryMongoFixtureLoader(
+            __DIR__ . '/test-config.yml'
+        );
+
+        $loader->addFixturesWithCollection(
+            array('collection' => array(array('_id' => 1, 'name' => 'brian')),
+            )
+        );
+
+        $loader->persistLoadedFixtures();
+
+
+    }
+
     /**
      * @return string
      */
@@ -162,5 +280,13 @@ YML;
         $rootFixtureDir = getEnv('TEMP_FIXTURE_DIR');
 
         return $rootFixtureDir;
+    }
+
+    public function getMongoClient()
+    {
+        if (!($this->client instanceof \MongoClient)) {
+            $this->connection = Connection::createFromConfiguration($this->mongoConfig['mongo_data_store']);
+            $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
+        }
     }
 }
