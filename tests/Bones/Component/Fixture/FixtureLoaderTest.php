@@ -77,7 +77,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
             array('_id' => 3, 'name' => 'fixture 3'),
             array('_id' => 4, 'name' => 'fixture 4'),
 
-        ),
+            ),
         );
 
         $this->inMemoryFixtureLoader->addFixturesWithCollection($fixture);

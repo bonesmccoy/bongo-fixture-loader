@@ -8,6 +8,15 @@ use Bones\Component\Mongo\Connection;
 
 class DataStoreTest extends \PHPUnit_Framework_TestCase
 {
+    protected $databaseParameters = array(
+        'host' => 'localhost',
+        'port' => '27017',
+        'username' => '',
+        'password' => '',
+        'db_name' => 'test-db',
+        'connect' => true,
+    );
+    protected $dataStoreParameters;
     /**
      * @var MongoDataStore
      */
@@ -24,38 +33,39 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
     private $connection;
 
     /** @var  string */
-    private $collection;
+    private $collection = 'collection-test';
 
     public function setUp()
     {
-        $mongoConfig = array(
-            'host' => 'localhost',
-            'port' => '27017',
-            'username' => '',
-            'password' => '',
-            'db_name' => 'test-db',
-            'connect' => true,
-        );
 
-        $mongoDataStoreConfiguration = array(
-            'mongo_data_store' => $mongoConfig,
-        );
 
-        $this->connection = Connection::createFromConfiguration($mongoConfig);
-        $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
-        $this->collection = 'collection-test';
-        $this->dataStore = new MongoDataStore($mongoDataStoreConfiguration, new FixtureTransformer());
+    }
 
-        $this->dataStore->emptyDataStore($this->collection);
+    public function tearDown()
+    {
+        if ($this->collection and ($this->dataStore instanceof MongoDataStore)) {
+            $this->dataStore->emptyDataStore($this->collection);
+        }
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testWrongDatabaseConfiguration()
+    {
+        $datastore = new MongoDataStore(array());
     }
 
     public function testCreationWithCorrectConfiguration()
     {
+        $this->createMongoDataStore();
         $this->assertInstanceOf('\Bones\Component\Fixture\Mongo\Data\MongoDataStore', $this->dataStore);
     }
 
     public function testPersist()
     {
+        $this->createMongoDataStore();
+
         $fixture = array(
             '_id' => '<id@56eb45003639330941000001>',
             'name' => 'ted',
@@ -65,12 +75,14 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
         $fixtureParser = new FixtureTransformer();
         $fixture = $fixtureParser->parse($fixture);
 
-        $collection = $this->collection;
         $databaseName = $this->connection->getDatabaseName();
 
-        $this->dataStore->persist($collection, array($fixture));
+        $this->dataStore->persist(
+            $this->collection,
+            array($fixture)
+        );
 
-        foreach ($this->client->$databaseName->$collection->find() as $document) {
+        foreach ($this->client->$databaseName->{$this->collection}->find() as $document) {
             $this->assertInstanceOf(
                 '\MongoId', $document['_id']
             );
@@ -80,5 +92,18 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
                 $document['referencedId']
             );
         }
+    }
+
+    public function createMongoDataStore()
+    {
+        $this->dataStoreParameters = array(
+            'mongo_data_store' => $this->databaseParameters,
+        );
+
+        $this->connection = Connection::createFromConfiguration($this->databaseParameters);
+        $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
+        $this->dataStore = new MongoDataStore($this->dataStoreParameters);
+
+        $this->dataStore->emptyDataStore($this->collection);
     }
 }
