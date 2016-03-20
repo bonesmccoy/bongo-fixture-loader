@@ -129,9 +129,9 @@ class FixtureLoader implements LoaderInterface
         }
     }
 
-    public function dumpMessages()
+    public function getMessagesAsString()
     {
-        echo implode("\n", $this->messages)."\n";
+        return implode(PHP_EOL, $this->messages);
     }
 
     /**

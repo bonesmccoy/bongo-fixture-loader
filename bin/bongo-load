@@ -36,7 +36,9 @@ try {
     $fixtureLoader->addFixturesFromConfiguration($bongoConfigurationFile, $cwd);
     $fixtureLoader->persistLoadedFixtures();
 
-    $fixtureLoader->dumpMessages();
+    fwrite(STDOUT,
+            $fixtureLoader->getMessagesAsString() . PHP_EOL
+    );
 
 } Catch(\Exception $e) {
     fwrite(STDERR,

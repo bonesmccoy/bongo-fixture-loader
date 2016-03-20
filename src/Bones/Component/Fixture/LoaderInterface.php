@@ -23,5 +23,5 @@ interface LoaderInterface
 
     public function persistLoadedFixtures();
 
-    public function dumpMessages();
+    public function getMessagesAsString();
 }

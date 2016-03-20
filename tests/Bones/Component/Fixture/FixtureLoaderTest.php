@@ -26,8 +26,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $transformer = new FixtureTransformer();
-        $this->inMemoryFixtureLoader = new FixtureLoader(new InMemoryDataStore(), $transformer);
+        $this->inMemoryFixtureLoader = FixtureLoader::factoryInMemoryFixtureLoader();
 
         $this->mongoConfig = Yaml::parse(file_get_contents(__DIR__ . "/test-config.yml" ));
 
@@ -35,7 +34,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->mongoDataStore = new MongoDataStore($this->mongoConfig);
 
-        $this->mongoFixtureLoader = new FixtureLoader($this->mongoDataStore,$transformer);
+        $this->mongoFixtureLoader = new FixtureLoader($this->mongoDataStore, new FixtureTransformer());
 
     }
 
@@ -141,9 +140,29 @@ CFG;
             2,
             $loadedFixtures
         );
-
         $this->assertArrayHasKey('first_collection', $loadedFixtures);
         $this->assertArrayHasKey('second_collection', $loadedFixtures);
+
+        $this->inMemoryFixtureLoader->persistLoadedFixtures();
+
+        $messageString = $this->inMemoryFixtureLoader->getMessagesAsString();
+
+        $this->assertTrue(
+            is_string($messageString)
+        );
+
+        $messages = explode(PHP_EOL, $messageString);
+        $this->assertCount(2, $messages);
+
+        $this->assertEquals(
+            'Adding 5 fixture to the collection first_collection',
+            $messages[0]
+        );
+        $this->assertEquals(
+            'Adding 5 fixture to the collection second_collection',
+            $messages[1]
+        );
+
     }
 
 
