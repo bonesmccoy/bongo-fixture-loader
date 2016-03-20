@@ -27,10 +27,12 @@ class InMemoryDataStore implements DataStoreInterface
     }
 
     /**
-     * @return array
+     * @param $collection
+     * @return array|mixed
      */
-    public function getData()
+    public function fetchCollection($collection)
     {
-        return $this->data;
+        return  (isset($this->data[$collection])) ? $this->data[$collection] : array();
     }
+
 }

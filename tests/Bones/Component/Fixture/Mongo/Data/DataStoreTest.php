@@ -35,11 +35,6 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
     /** @var  string */
     private $collection = 'collection-test';
 
-    public function setUp()
-    {
-
-
-    }
 
     public function tearDown()
     {
@@ -75,14 +70,12 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
         $fixtureParser = new FixtureTransformer();
         $fixture = $fixtureParser->parse($fixture);
 
-        $databaseName = $this->connection->getDatabaseName();
-
         $this->dataStore->persist(
             $this->collection,
             array($fixture)
         );
 
-        foreach ($this->client->$databaseName->{$this->collection}->find() as $document) {
+        foreach ($this->dataStore->fetchCollection($this->collection) as $document) {
             $this->assertInstanceOf(
                 '\MongoId', $document['_id']
             );
@@ -103,7 +96,5 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase
         $this->connection = Connection::createFromConfiguration($this->databaseParameters);
         $this->client = new \MongoClient($this->connection->getConnectionUrl(), $this->connection->getConnectionOptions());
         $this->dataStore = new MongoDataStore($this->dataStoreParameters);
-
-        $this->dataStore->emptyDataStore($this->collection);
     }
 }

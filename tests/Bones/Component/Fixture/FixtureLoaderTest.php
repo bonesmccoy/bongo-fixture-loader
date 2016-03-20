@@ -39,8 +39,6 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
-
     public function testLoadSingleFixture()
     {
         $fixture = array('collection' => array(
@@ -146,6 +144,38 @@ CFG;
 
         $this->assertArrayHasKey('first_collection', $loadedFixtures);
         $this->assertArrayHasKey('second_collection', $loadedFixtures);
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testLoadingWrongConfigurationFile()
+    {
+        $this->createYmlFile('fixtures', $this->getFixtureFileContent());
+
+        $configYmlContent = <<<CFG
+fixtures:
+
+CFG;
+
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
+
+        $configYmlContent = "";
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
+
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testLoadingEmptyConfiguratonFile()
+    {
+        $configYmlContent = "";
+        $configFile = $this->createYmlFile('config', $configYmlContent);
+        $this->inMemoryFixtureLoader->addFixturesFromConfiguration($configFile);
     }
 
     /**

@@ -49,4 +49,14 @@ class MongoDataStore implements DataStoreInterface
         $databaseName = $this->databaseConfiguration->getDatabaseName();
         $this->dataStoreWriter->$databaseName->$collection->batchInsert($fixtures);
     }
+
+    public function fetchCollection($collection)
+    {
+        $databaseName = $this->databaseConfiguration->getDatabaseName();
+        $cursor = $this->dataStoreWriter->$databaseName->$collection->find();
+
+        return iterator_to_array($cursor);
+    }
+
+
 }

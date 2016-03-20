@@ -16,4 +16,11 @@ interface DataStoreInterface
      * @return
      */
     public function persist($collection, $fixtures);
+
+
+    /**
+     * @param $collection
+     * @return mixed
+     */
+    public function fetchCollection($collection);
 }
