@@ -8,7 +8,7 @@ use Bones\Component\Mongo\Utilities;
 /**
  * parse fixture value with structure <id@{hexMongoId}> and creates a MongoId
  *
- * Class IdTranslator
+ * Class MongoIdTransformer
  * @package Bones\Component\Fixture\Parser\Transformer
  */
 
