@@ -4,7 +4,7 @@ namespace Bones\Component\Fixture\Parser;
 
 use Bones\Component\Fixture\Parser\Transformer\TransformerInterface;
 
-interface FixtureTransformerIntreface
+interface FixtureTransformerInterface
 {
     /**
      * @param $fixture

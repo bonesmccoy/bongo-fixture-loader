@@ -2,9 +2,6 @@
 
 namespace Bones\Component\Fixture\Parser\Transformer;
 
-use Bones\Component\Fixture\Parser\TransformerInterface;
-use Bones\Component\Mongo\Utilities;
-
 /**
  * parse fixture value with structure <id@{hexMongoId}> and creates a MongoId
  *

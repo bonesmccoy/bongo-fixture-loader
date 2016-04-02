@@ -3,7 +3,6 @@
 namespace Bones\Component\Fixture\Memory\Data;
 
 use Bones\Component\Fixture\DataStoreInterface;
-use Bones\Component\Fixture\Parser\FixtureTransformerIntreface;
 
 class InMemoryDataStore implements DataStoreInterface
 {

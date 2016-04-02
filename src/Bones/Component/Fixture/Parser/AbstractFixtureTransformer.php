@@ -4,7 +4,7 @@ namespace Bones\Component\Fixture\Parser;
 
 use Bones\Component\Fixture\Parser\Transformer\TransformerInterface;
 
-abstract class AbstractFixtureTransformer implements FixtureTransformerIntreface
+abstract class AbstractFixtureTransformer implements FixtureTransformerInterface
 {
     /**
      * @var TransformerInterface[]

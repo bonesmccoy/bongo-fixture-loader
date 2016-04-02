@@ -5,7 +5,7 @@ namespace Bones\Component\Fixture;
 use Bones\Component\Fixture\Parser\FixtureTransformer;
 use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
 use Bones\Component\Fixture\Mongo\Data\MongoDataStore;
-use Bones\Component\Fixture\Parser\FixtureTransformerIntreface;
+use Bones\Component\Fixture\Parser\FixtureTransformerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class FixtureLoader implements LoaderInterface
@@ -28,16 +28,16 @@ class FixtureLoader implements LoaderInterface
     protected $dataStoreWriter;
 
     /**
-     * @var FixtureTransformerIntreface
+     * @var FixtureTransformerInterface
      */
     private $fixtureParser;
 
     /**
      * FixtureLoader constructor.
      * @param DataStoreInterface $dataStoreWriter
-     * @param FixtureTransformerIntreface $fixtureParser
+     * @param FixtureTransformerInterface $fixtureParser
      */
-    public function __construct(DataStoreInterface $dataStoreWriter, FixtureTransformerIntreface $fixtureParser)
+    public function __construct(DataStoreInterface $dataStoreWriter, FixtureTransformerInterface $fixtureParser)
     {
         $this->yamlParser = new Yaml();
         $this->dataStoreWriter = $dataStoreWriter;
