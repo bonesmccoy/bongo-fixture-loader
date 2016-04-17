@@ -15,8 +15,8 @@ class MongoIdTransformer extends AbstractTransformer
 
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      *
      * @return \MongoId
      */

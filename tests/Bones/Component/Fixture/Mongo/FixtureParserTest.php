@@ -2,12 +2,16 @@
 
 namespace tests\Bones\Component\Fixture\Mongo;
 
-
-
 use Bones\Component\Fixture\Parser\FixtureTransformer;
 
+/**
+ * Class FixtureParserTest
+ */
 class FixtureParserTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @test \Bones\Component\Fixture\Parser\Transformer\MongoIdTransformer::convert()
+     */
     public function testFixtureWithId()
     {
         $fixture = array(
@@ -26,6 +30,9 @@ class FixtureParserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @test \Bones\Component\Fixture\Parser\Transformer\MongoIdTransformer::convert()
+     */
     public function testFixtureWithIdAndReference()
     {
         $fixture = array(

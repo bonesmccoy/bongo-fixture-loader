@@ -2,26 +2,39 @@
 
 namespace Bones\Component\Fixture;
 
+/**
+ * Interface LoaderInterface
+ *
+ */
 interface LoaderInterface
 {
     /**
-     * @param $fixture
+     * @param array $fixture
      */
     public function addFixturesWithCollection($fixture);
 
     /**
-     * @param $fixtureFile
+     * @param string $fixtureFilePath
      */
-    public function addFixturesFromFile($fixtureFile);
+    public function addFixturesFromFile($fixtureFilePath);
 
     /**
      * @param string $fixtureDirectoryPath
      */
     public function addFixturesFromDirectory($fixtureDirectoryPath);
 
-    public function addFixturesFromConfiguration($fixtureConfigurationFile);
+    /**
+     * @param string $configurationFilePath
+     */
+    public function addFixturesFromConfiguration($configurationFilePath);
 
+    /**
+     * Persist Loaded fixtures into the data store
+     */
     public function persistLoadedFixtures();
 
+    /**
+     * @return string
+     */
     public function getMessagesAsString();
 }

@@ -5,6 +5,9 @@ namespace Bones\Component\Fixture\Parser;
 use Bones\Component\Fixture\Parser\Transformer\DateTimeTransformer;
 use Bones\Component\Fixture\Parser\Transformer\MongoIdTransformer;
 
+/**
+ * Class FixtureTransformer
+ */
 class FixtureTransformer extends AbstractFixtureTransformer
 {
 
@@ -13,7 +16,7 @@ class FixtureTransformer extends AbstractFixtureTransformer
      */
     public function __construct()
     {
-        $this->addTranslator(new MongoIdTransformer());
-        $this->addTranslator(new DateTimeTransformer());
+        $this->addTransformer(new MongoIdTransformer());
+        $this->addTransformer(new DateTimeTransformer());
     }
 }

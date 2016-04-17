@@ -2,25 +2,29 @@
 
 namespace Bones\Component\Fixture;
 
+/**
+ * Interface DataStoreInterface
+ */
 interface DataStoreInterface
 {
     /**
-     * @param $collection
+     * @param string $collectionName
      */
-    public function emptyDataStore($collection);
+    public function emptyDataStore($collectionName);
 
     /**
-     * @param string $collection
+     * @param string $collectionName
      * @param array  $fixtures
      *
      * @return
      */
-    public function persist($collection, $fixtures);
+    public function persist($collectionName, $fixtures);
 
 
     /**
-     * @param $collection
-     * @return mixed
+     * @param string $collectionName
+     *
+     * @return array
      */
-    public function fetchCollection($collection);
+    public function fetchCollection($collectionName);
 }

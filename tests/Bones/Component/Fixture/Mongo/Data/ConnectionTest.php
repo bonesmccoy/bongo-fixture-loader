@@ -4,8 +4,14 @@ namespace tests\Bones\Component\Fixture\Mongo\Data;
 
 use Bones\Component\Mongo\Connection;
 
+/**
+ * Class ConnectionTest
+ */
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * test configuration
+     */
     public function testConfiguration()
     {
         $config = array(
@@ -22,6 +28,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceof('\Bones\Component\Mongo\Connection', $dbConfiguration);
     }
 
+    /**
+     * Test configuration with default value
+     */
     public function testConfigurationWithDefaultValues()
     {
         $dbConfiguration = Connection::createFromConfiguration(array('db_name' => 'test-db'));
@@ -32,6 +41,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Test configuration with username and password
+     */
     public function testConfigurationWithUsernameAndPassword()
     {
         $config = array(

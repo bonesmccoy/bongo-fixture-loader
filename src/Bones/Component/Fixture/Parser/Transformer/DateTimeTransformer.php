@@ -3,7 +3,9 @@
 
 namespace Bones\Component\Fixture\Parser\Transformer;
 
-
+/**
+ * Class DateTimeTransformer
+ */
 class DateTimeTransformer extends AbstractTransformer
 {
 
@@ -11,10 +13,10 @@ class DateTimeTransformer extends AbstractTransformer
 
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      *
-     * @return mixed
+     * @return \MongoDate
      */
     public function convert($key, $value)
     {

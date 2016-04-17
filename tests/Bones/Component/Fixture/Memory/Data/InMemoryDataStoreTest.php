@@ -1,11 +1,12 @@
 <?php
 
-
 namespace test\Bones\Component\Fixture\Memory\Data;
-
 
 use Bones\Component\Fixture\Memory\Data\InMemoryDataStore;
 
+/**
+ * Class InMemoryDataStoreTest
+ */
 class InMemoryDataStoreTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -13,15 +14,26 @@ class InMemoryDataStoreTest extends \PHPUnit_Framework_TestCase
      */
     protected $dataStore;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         $this->dataStore = new InMemoryDataStore();
 
-        $this->dataStore->persist('collection', array(
-            array("id" => 1)
-        ));
+        $this->dataStore->persist(
+            'collection',
+            array(
+                array("id" => 1),
+            )
+        );
     }
 
+    /**
+     * Test persistence
+     *
+     * @test \Bones\Component\Fixture\Memory\Data\InMemoryDataStore::persist()
+     */
     public function testPersist()
     {
         $storedData = $this->dataStore->fetchCollection('collection');
@@ -38,6 +50,11 @@ class InMemoryDataStoreTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test empty data store
+     *
+     * @test \Bones\Component\Fixture\Memory\Data\InMemoryDataStore::emptyDataStore
+     */
     public function testEmptyDataStore()
     {
         $this->assertCount(
@@ -49,6 +66,5 @@ class InMemoryDataStoreTest extends \PHPUnit_Framework_TestCase
             0,
             $this->dataStore->fetchCollection('collection')
         );
-
     }
 }

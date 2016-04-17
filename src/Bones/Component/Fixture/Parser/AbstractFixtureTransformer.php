@@ -4,6 +4,9 @@ namespace Bones\Component\Fixture\Parser;
 
 use Bones\Component\Fixture\Parser\Transformer\TransformerInterface;
 
+/**
+ * Class AbstractFixtureTransformer
+ */
 abstract class AbstractFixtureTransformer implements FixtureTransformerInterface
 {
     /**
@@ -11,7 +14,10 @@ abstract class AbstractFixtureTransformer implements FixtureTransformerInterface
      */
     protected $translators;
 
-    public function parse($fixture)
+    /**
+     * {@inheritdoc}
+     */
+    public function parse(array $fixture)
     {
         foreach ($fixture as $key => $value) {
             $fixture[$key] = $this->strategy($key, $value);
@@ -20,6 +26,20 @@ abstract class AbstractFixtureTransformer implements FixtureTransformerInterface
         return $fixture;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function addTransformer(TransformerInterface $transformer)
+    {
+        $this->translators[] = $transformer;
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     *
+     * @return mixed
+     */
     private function strategy($key, $value)
     {
         /** @var TransformerInterface $translator */
@@ -30,13 +50,5 @@ abstract class AbstractFixtureTransformer implements FixtureTransformerInterface
         }
 
         return $value;
-    }
-
-    /**
-     * @param TransformerInterface $transformer
-     */
-    public function addTranslator(TransformerInterface $transformer)
-    {
-        $this->translators[] = $transformer;
     }
 }

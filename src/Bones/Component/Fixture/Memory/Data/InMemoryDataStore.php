@@ -4,34 +4,34 @@ namespace Bones\Component\Fixture\Memory\Data;
 
 use Bones\Component\Fixture\DataStoreInterface;
 
+/**
+ * Class InMemoryDataStore
+ */
 class InMemoryDataStore implements DataStoreInterface
 {
     protected $data = array();
 
     /**
-     * @param $collection
+     * {@inheritdoc}
      */
-    public function emptyDataStore($collection)
+    public function emptyDataStore($collectionName)
     {
-        $this->data[$collection] = array();
+        $this->data[$collectionName] = array();
     }
 
     /**
-     * @param $collection
-     * @param array $fixtures
+     * {@inheritdoc}
      */
-    public function persist($collection, $fixtures)
+    public function persist($collectionName, $fixtures)
     {
-        $this->data[$collection] = $fixtures;
+        $this->data[$collectionName] = $fixtures;
     }
 
     /**
-     * @param $collection
-     * @return array|mixed
+     * {@inheritdoc}
      */
-    public function fetchCollection($collection)
+    public function fetchCollection($collectionName)
     {
-        return  (isset($this->data[$collection])) ? $this->data[$collection] : array();
+        return  (isset($this->data[$collectionName])) ? $this->data[$collectionName] : array();
     }
-
 }

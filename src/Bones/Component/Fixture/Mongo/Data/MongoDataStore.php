@@ -5,6 +5,10 @@ namespace Bones\Component\Fixture\Mongo\Data;
 use Bones\Component\Fixture\DataStoreInterface;
 use Bones\Component\Mongo\Connection;
 
+/**
+ * Class MongoDataStore
+ * @package Bones\Component\Fixture\Mongo\Data
+ */
 class MongoDataStore implements DataStoreInterface
 {
     /**
@@ -17,7 +21,12 @@ class MongoDataStore implements DataStoreInterface
      */
     private $dataStoreWriter;
 
-    public function __construct($config)
+    /**
+     * MongoDataStore constructor.
+     *
+     * @param array $config
+     */
+    public function __construct(array $config)
     {
         if (empty($config['mongo_data_store'])) {
             throw new \InvalidArgumentException('Missing mongo_data_store key in config');
@@ -32,31 +41,31 @@ class MongoDataStore implements DataStoreInterface
     }
 
     /**
-     * @param $collection
+     * {@inheritdoc}
      */
-    public function emptyDataStore($collection)
+    public function emptyDataStore($collectionName)
     {
         $databaseName = $this->databaseConfiguration->getDatabaseName();
-        $this->dataStoreWriter->$databaseName->$collection->remove(array());
+        $this->dataStoreWriter->$databaseName->$collectionName->remove(array());
     }
 
     /**
-     * @param string $collection
-     * @param array  $fixtures
+     * {@inheritdoc}
      */
-    public function persist($collection, $fixtures)
+    public function persist($collectionName, $fixtures)
     {
         $databaseName = $this->databaseConfiguration->getDatabaseName();
-        $this->dataStoreWriter->$databaseName->$collection->batchInsert($fixtures);
+        $this->dataStoreWriter->$databaseName->$collectionName->batchInsert($fixtures);
     }
 
-    public function fetchCollection($collection)
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchCollection($collectionName)
     {
         $databaseName = $this->databaseConfiguration->getDatabaseName();
-        $cursor = $this->dataStoreWriter->$databaseName->$collection->find();
+        $cursor = $this->dataStoreWriter->$databaseName->$collectionName->find();
 
         return iterator_to_array($cursor);
     }
-
-
 }

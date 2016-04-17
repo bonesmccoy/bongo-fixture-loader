@@ -2,17 +2,16 @@
 
 namespace Bones\Component\Fixture\Parser\Transformer;
 
-
+/**
+ * Class AbstractTransformer
+ */
 abstract class AbstractTransformer implements TransformerInterface
 {
 
     const PATTERN = '';
 
     /**
-     * @param $key
-     * @param $value
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function match($key, $value)
     {
@@ -28,12 +27,11 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param $value
+     *
      * @return bool
      */
     protected function isValid($value)
     {
-        if (is_array($value)) { return false; }
-
-        return true;
+        return is_array($value);
     }
 }
