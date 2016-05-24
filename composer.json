@@ -1,5 +1,7 @@
 {
     "name": "bonesmccoy/bongo-fixture-loader",
+    "description" : "simple mongo fixture loader",
+    "license": "MIT",
     "repositories": [
         {
             "type": "vcs",
